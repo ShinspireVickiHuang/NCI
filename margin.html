@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>毛利分析 — Supply Core OS</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    .margin-bar-wrap { display:flex; align-items:center; gap:10px; font-size:13px; }
+    .margin-bar-bg   { flex:1; height:10px; background:var(--line); border-radius:999px; overflow:hidden; }
+    .margin-bar-fill { height:100%; border-radius:999px; }
+    .margin-warn { color: var(--orange); font-weight:700; }
+    .margin-alert { color: var(--red); font-weight:700; }
+    .margin-ok    { color: var(--green); font-weight:700; }
+    .cost-breakdown {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px;
+    }
+    .cost-item {
+      font-size: 12px; padding:3px 10px; border-radius:6px;
+      background:#f1f5f9; color:var(--subtext);
+    }
+    .delta-badge {
+      display:inline-flex; align-items:center; gap:4px;
+      background:#f3e8ff; color:#7c3aed; border:1px solid #c4b5fd;
+      border-radius:8px; padding:3px 10px; font-size:11px; font-weight:700;
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><h1>Supply Core OS</h1><p>核心業務系統示意畫面</p></div>
+    <div class="nav-group">
+      <div class="nav-title">總覽</div>
+      <a class="nav-item" href="index.html">Dashboard</a>
+      <a class="nav-item" href="todo.html">我的待辦</a>
+      <a class="nav-item" href="exceptions.html">異常中心</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">主資料</div>
+      <a class="nav-item" href="products.html">商品資料</a>
+      <a class="nav-item" href="suppliers.html">供應商資料</a>
+      <a class="nav-item" href="supplier-mapping.html">Supplier Mapping</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">交易作業</div>
+      <a class="nav-item" href="quotes.html">報價管理</a>
+      <a class="nav-item" href="orders.html">訂單管理</a>
+      <a class="nav-item" href="purchase.html">採購管理</a>
+      <a class="nav-item" href="receiving.html">收貨 / QC</a>
+      <a class="nav-item" href="logistics.html">物流交付</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">營運分析</div>
+      <a class="nav-item" href="supply-performance.html">供應績效</a>
+      <a class="nav-item" href="delivery-risk.html">交期風險</a>
+      <a class="nav-item active" href="margin.html">毛利分析</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="search">🔎 搜尋訂單號、客戶、商品、月份...</div>
+      <div class="top-actions">
+        <div class="icon-btn">🔔 8</div>
+        <div class="user-box"><span class="avatar"></span>
+          <div><div style="font-weight:700;">王怡文</div><div style="font-size:12px;color:var(--subtext);">營運主管</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h2>毛利分析</h2>
+        <p>從每張訂單的實際採購成本、加工費、物流費與緊急加價回推毛利，識別低毛利訂單，支援報價策略優化。</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn secondary">匯出月報</button>
+        <button class="btn secondary">設定預警值</button>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <section class="kpi-grid">
+      <div class="card">
+        <div class="kpi-label">本月平均毛利率</div>
+        <div class="kpi-value">26.4%</div>
+        <div class="kpi-trend trend-warn">目標 30%</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">毛利低於預警（18%）</div>
+        <div class="kpi-value">5</div>
+        <div class="kpi-trend trend-alert">需審查成本結構</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">緊急加工費佔比</div>
+        <div class="kpi-value">8.3%</div>
+        <div class="kpi-trend trend-warn">主要侵蝕毛利來源</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">本月最佳毛利訂單</div>
+        <div class="kpi-value">38.2%</div>
+        <div class="kpi-trend trend-up">SO-20260416-002</div>
+      </div>
+    </section>
+
+    <!-- 毛利來源說明 -->
+    <div class="card" style="margin-bottom:20px; border-left:4px solid var(--primary);">
+      <div style="font-weight:700;margin-bottom:8px;">毛利計算來源（第三階段完整後自動回寫）</div>
+      <div class="meta">
+        毛利 = 客戶報價 − 採購成本（含白胚 + 加工工藝 + MOQ 分攤）− 加工費 − 物流成本 − 緊急加價<br>
+        <strong>禮贈品業特殊成本：</strong>打樣費、Logo 修版費、活動緊急排程費用，都可能大幅壓縮毛利，需逐筆追蹤。
+      </div>
+    </div>
+
+    <!-- Margin Table -->
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>訂單號</th>
+            <th>客戶</th>
+            <th>品項</th>
+            <th>報價金額</th>
+            <th>實際成本</th>
+            <th>毛利率</th>
+            <th>成本拆解</th>
+            <th>毛利狀態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>SO-20260416-002</td>
+            <td>玉山銀行</td>
+            <td>精裝筆記本（燙金）1,000 pcs</td>
+            <td>NT$ 185,000</td>
+            <td>NT$ 114,200</td>
+            <td>
+              <div class="margin-bar-wrap">
+                <div class="margin-bar-bg"><div class="margin-bar-fill" style="width:38%;background:var(--green);"></div></div>
+                <span class="margin-ok">38.2%</span>
+              </div>
+            </td>
+            <td>
+              <div class="cost-breakdown">
+                <span class="cost-item">白胚 NT$95,000</span>
+                <span class="cost-item">加工 NT$12,500</span>
+                <span class="cost-item">物流 NT$6,700</span>
+              </div>
+            </td>
+            <td><span class="status done">優良</span></td>
+          </tr>
+          <tr>
+            <td>SO-20260421-003</td>
+            <td>台積電</td>
+            <td>員工禮包組合 1,200 set</td>
+            <td>NT$ 792,000</td>
+            <td>NT$ 567,000</td>
+            <td>
+              <div class="margin-bar-wrap">
+                <div class="margin-bar-bg"><div class="margin-bar-fill" style="width:28%;background:var(--primary);"></div></div>
+                <span style="color:var(--primary);font-weight:700;">28.4%</span>
+              </div>
+            </td>
+            <td>
+              <div class="cost-breakdown">
+                <span class="cost-item">白胚 NT$462,000</span>
+                <span class="cost-item">加工 NT$68,000</span>
+                <span class="cost-item">物流 NT$37,000</span>
+              </div>
+            </td>
+            <td><span class="status done">正常</span></td>
+          </tr>
+          <tr>
+            <td>SO-20260422-011</td>
+            <td>中信銀行</td>
+            <td>皮革護照夾 800 pcs</td>
+            <td>NT$ 320,000</td>
+            <td>NT$ 241,600</td>
+            <td>
+              <div class="margin-bar-wrap">
+                <div class="margin-bar-bg"><div class="margin-bar-fill" style="width:24%;background:var(--primary);"></div></div>
+                <span style="color:var(--primary);font-weight:700;">24.5%</span>
+              </div>
+            </td>
+            <td>
+              <div class="cost-breakdown">
+                <span class="cost-item">白胚 NT$192,000</span>
+                <span class="cost-item">加工 NT$28,800</span>
+                <span class="cost-item" style="background:var(--orange-soft);color:var(--orange);">打樣修版 NT$8,000</span>
+                <span class="cost-item">物流 NT$12,800</span>
+              </div>
+            </td>
+            <td><span class="status processing">正常偏低</span></td>
+          </tr>
+          <tr>
+            <td>SO-20260420-031</td>
+            <td>中信銀行</td>
+            <td>行動電源 300 pcs（客製 UV）</td>
+            <td>NT$ 264,000</td>
+            <td>NT$ 228,000</td>
+            <td>
+              <div class="margin-bar-wrap">
+                <div class="margin-bar-bg"><div class="margin-bar-fill" style="width:13%;background:var(--orange);"></div></div>
+                <span class="margin-warn">13.6%</span>
+              </div>
+            </td>
+            <td>
+              <div class="cost-breakdown">
+                <span class="cost-item">白胚 NT$174,000</span>
+                <span class="cost-item">加工 NT$18,000</span>
+                <span class="cost-item" style="background:var(--red-soft);color:var(--red);">緊急排程費 NT$22,000</span>
+                <span class="cost-item">物流 NT$14,000</span>
+              </div>
+            </td>
+            <td><span class="status pending">預警</span> <span class="delta-badge">△Flow</span></td>
+          </tr>
+          <tr>
+            <td>SO-20260419-007</td>
+            <td>遠傳電信</td>
+            <td>帆布環保袋 2,000 pcs</td>
+            <td>NT$ 228,000</td>
+            <td>NT$ 205,200</td>
+            <td>
+              <div class="margin-bar-wrap">
+                <div class="margin-bar-bg"><div class="margin-bar-fill" style="width:10%;background:var(--red);"></div></div>
+                <span class="margin-alert">10.0%</span>
+              </div>
+            </td>
+            <td>
+              <div class="cost-breakdown">
+                <span class="cost-item">白胚 NT$170,000</span>
+                <span class="cost-item" style="background:var(--red-soft);color:var(--red);">重工補貨費 NT$18,000</span>
+                <span class="cost-item" style="background:var(--orange-soft);color:var(--orange);">緊急排程 NT$10,000</span>
+                <span class="cost-item">物流 NT$7,200</span>
+              </div>
+            </td>
+            <td><span class="status alert">低毛利</span> <span class="delta-badge">△Flow</span></td>
+          </tr>
+          <tr>
+            <td>SO-20260423-014</td>
+            <td>國泰人壽</td>
+            <td>保溫杯 500 pcs</td>
+            <td>NT$ 225,000</td>
+            <td>NT$ 158,750</td>
+            <td>
+              <div class="margin-bar-wrap">
+                <div class="margin-bar-bg"><div class="margin-bar-fill" style="width:29%;background:var(--primary);"></div></div>
+                <span style="color:var(--primary);font-weight:700;">29.4%</span>
+              </div>
+            </td>
+            <td>
+              <div class="cost-breakdown">
+                <span class="cost-item">白胚 NT$131,250</span>
+                <span class="cost-item">加工 NT$18,750</span>
+                <span class="cost-item">物流 NT$8,750</span>
+              </div>
+            </td>
+            <td><span class="status done">正常</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer-note">示意用途：Supply Core OS — 毛利分析 Mockup ｜ 毛利異常（低於 18%）自動觸發 Delta Flow 審查流程</div>
+  </main>
+</div>
+</body>
+</html>

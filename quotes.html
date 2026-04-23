@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>報價管理 — Supply Core OS</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    .flow-step {
+      display:flex; align-items:center; gap:8px; font-size:13px;
+    }
+    .flow-node {
+      background:#f1f5f9; border:1px solid var(--line); border-radius:10px;
+      padding:6px 12px; font-weight:600; white-space:nowrap;
+    }
+    .flow-node.active { background:var(--primary-soft); color:var(--primary); border-color:#93c5fd; }
+    .flow-node.done   { background:var(--green-soft);   color:var(--green);   border-color:#86efac; }
+    .flow-arrow { color:var(--subtext); font-size:16px; }
+    .delta-badge {
+      display:inline-flex; align-items:center; gap:4px;
+      background:#f3e8ff; color:#7c3aed; border:1px solid #c4b5fd;
+      border-radius:8px; padding:3px 10px; font-size:11px; font-weight:700;
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><h1>Supply Core OS</h1><p>核心業務系統示意畫面</p></div>
+    <div class="nav-group">
+      <div class="nav-title">總覽</div>
+      <a class="nav-item" href="index.html">Dashboard</a>
+      <a class="nav-item" href="todo.html">我的待辦</a>
+      <a class="nav-item" href="exceptions.html">異常中心</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">主資料</div>
+      <a class="nav-item" href="products.html">商品資料</a>
+      <a class="nav-item" href="suppliers.html">供應商資料</a>
+      <a class="nav-item" href="supplier-mapping.html">Supplier Mapping</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">交易作業</div>
+      <a class="nav-item active" href="quotes.html">報價管理</a>
+      <a class="nav-item" href="orders.html">訂單管理</a>
+      <a class="nav-item" href="purchase.html">採購管理</a>
+      <a class="nav-item" href="receiving.html">收貨 / QC</a>
+      <a class="nav-item" href="logistics.html">物流交付</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">營運分析</div>
+      <a class="nav-item" href="supply-performance.html">供應績效</a>
+      <a class="nav-item" href="delivery-risk.html">交期風險</a>
+      <a class="nav-item" href="margin.html">毛利分析</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="search">🔎 搜尋報價單號、客戶、商品、活動名稱...</div>
+      <div class="top-actions">
+        <div class="icon-btn">🔔 8</div>
+        <div class="user-box"><span class="avatar"></span>
+          <div><div style="font-weight:700;">王怡文</div><div style="font-size:12px;color:var(--subtext);">營運主管</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h2>報價管理</h2>
+        <p>管理禮贈品報價草稿、客製規格確認、核價流程與有效期限。報價核准後方可轉為正式訂單。</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn secondary">匯出報表</button>
+        <button class="btn primary">＋ 新增報價</button>
+      </div>
+    </div>
+
+    <!-- Delta Flow 流程示意 -->
+    <div class="card" style="margin-bottom:20px;">
+      <div style="margin-bottom:10px; font-size:13px; color:var(--subtext);">
+        <span class="delta-badge">⚙️ Delta Flow</span>
+        &nbsp;報價確認流程 — 業務建立草稿 → 送主管核價 → 核准後可轉訂單
+      </div>
+      <div class="flow-step" style="flex-wrap:wrap; gap:6px;">
+        <div class="flow-node done">草稿建立</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-node done">規格確認</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-node active">送審核價 ← 目前階段</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-node">主管核准</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-node">發送客戶</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-node">客戶確認</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-node">轉為訂單</div>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <section class="kpi-grid">
+      <div class="card">
+        <div class="kpi-label">本月報價總數</div>
+        <div class="kpi-value">38</div>
+        <div class="kpi-trend trend-info">較上月 +6 件</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">待核價（Delta Flow）</div>
+        <div class="kpi-value">5</div>
+        <div class="kpi-trend trend-warn">含 2 件今日截止</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">報價成交率</div>
+        <div class="kpi-value">62%</div>
+        <div class="kpi-trend trend-up">目標 60%</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">即將到期（7 天內）</div>
+        <div class="kpi-value">8</div>
+        <div class="kpi-trend trend-alert">需追蹤客戶回覆</div>
+      </div>
+    </section>
+
+    <!-- Filter -->
+    <div class="filter-bar">
+      <span class="filter-chip active">全部 (38)</span>
+      <span class="filter-chip">草稿 (4)</span>
+      <span class="filter-chip">待核價 (5)</span>
+      <span class="filter-chip">已發送 (12)</span>
+      <span class="filter-chip">客戶確認中 (7)</span>
+      <span class="filter-chip">已成交 (8)</span>
+      <span class="filter-chip">已過期 (2)</span>
+    </div>
+
+    <!-- Table -->
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>報價單號</th>
+            <th>客戶</th>
+            <th>活動 / 用途</th>
+            <th>品項摘要</th>
+            <th>數量</th>
+            <th>報價金額</th>
+            <th>流程狀態</th>
+            <th>有效期限</th>
+            <th>負責業務</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>QT-20260423-007</td>
+            <td>富邦金控</td>
+            <td>2026 股東會紀念品</td>
+            <td>客製不鏽鋼保溫杯（雷射 Logo）</td>
+            <td>3,000 pcs</td>
+            <td>NT$ 1,140,000</td>
+            <td><span class="status pending">待核價</span> <span class="delta-badge">△Flow</span></td>
+            <td>2026/05/01</td>
+            <td>林業務</td>
+          </tr>
+          <tr>
+            <td>QT-20260423-004</td>
+            <td>富邦金控</td>
+            <td>員工尾牙禮</td>
+            <td>客製行動電源 10,000mAh（UV 印刷）</td>
+            <td>300 pcs</td>
+            <td>NT$ 264,000</td>
+            <td><span class="status pending">待核價</span> <span class="delta-badge">△Flow</span></td>
+            <td>2026/04/28</td>
+            <td>林業務</td>
+          </tr>
+          <tr>
+            <td>QT-20260422-006</td>
+            <td>國泰人壽</td>
+            <td>業績獎勵禮</td>
+            <td>客製皮革名片夾（燙金）× 精裝筆記本（燙金）組合</td>
+            <td>500 set</td>
+            <td>NT$ 237,500</td>
+            <td><span class="status processing">客戶確認中</span></td>
+            <td>2026/04/30</td>
+            <td>陳業務</td>
+          </tr>
+          <tr>
+            <td>QT-20260421-003</td>
+            <td>台積電</td>
+            <td>新進員工禮包</td>
+            <td>保溫杯 + 帆布環保袋 + 精裝筆記本（客製組合）</td>
+            <td>1,200 set</td>
+            <td>NT$ 792,000</td>
+            <td><span class="status done">已成交</span></td>
+            <td>2026/05/15</td>
+            <td>王主管</td>
+          </tr>
+          <tr>
+            <td>QT-20260420-002</td>
+            <td>中信銀行</td>
+            <td>貴賓禮贈品</td>
+            <td>限定版皮革護照夾（壓紋 Logo）</td>
+            <td>800 pcs</td>
+            <td>NT$ 320,000</td>
+            <td><span class="status processing">已發送</span></td>
+            <td>2026/04/27</td>
+            <td>林業務</td>
+          </tr>
+          <tr>
+            <td>QT-20260419-001</td>
+            <td>遠傳電信</td>
+            <td>週年慶活動禮</td>
+            <td>客製帆布環保袋（滿版印刷）</td>
+            <td>2,000 pcs</td>
+            <td>NT$ 228,000</td>
+            <td><span class="status processing">已發送</span></td>
+            <td>2026/04/25</td>
+            <td>陳業務</td>
+          </tr>
+          <tr>
+            <td>QT-20260418-005</td>
+            <td>元大投信</td>
+            <td>法說會禮品</td>
+            <td>馬克杯（轉印 Logo）</td>
+            <td>200 pcs</td>
+            <td style="color:var(--subtext);">未填寫</td>
+            <td><span class="status draft">草稿</span></td>
+            <td>—</td>
+            <td>林業務</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer-note">示意用途：Supply Core OS — 報價管理 Mockup ｜ 核價流程由 Delta Flow 管理</div>
+  </main>
+</div>
+</body>
+</html>

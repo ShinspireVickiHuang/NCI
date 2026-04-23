@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>物流交付 — Supply Core OS</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    .delta-badge {
+      display:inline-flex; align-items:center; gap:4px;
+      background:#f3e8ff; color:#7c3aed; border:1px solid #c4b5fd;
+      border-radius:8px; padding:3px 10px; font-size:11px; font-weight:700;
+    }
+    .doc-chip {
+      display:inline-block; padding:3px 8px; border-radius:6px; font-size:11px; font-weight:600;
+      background:var(--green-soft); color:var(--green); margin-right:4px;
+    }
+    .doc-chip.missing {
+      background:var(--red-soft); color:var(--red);
+    }
+    .event-date { font-size:12px; color:var(--red); font-weight:700; background:var(--red-soft); padding:3px 8px; border-radius:6px; }
+    .event-date.safe { color:var(--green); background:var(--green-soft); }
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><h1>Supply Core OS</h1><p>核心業務系統示意畫面</p></div>
+    <div class="nav-group">
+      <div class="nav-title">總覽</div>
+      <a class="nav-item" href="index.html">Dashboard</a>
+      <a class="nav-item" href="todo.html">我的待辦</a>
+      <a class="nav-item" href="exceptions.html">異常中心</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">主資料</div>
+      <a class="nav-item" href="products.html">商品資料</a>
+      <a class="nav-item" href="suppliers.html">供應商資料</a>
+      <a class="nav-item" href="supplier-mapping.html">Supplier Mapping</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">交易作業</div>
+      <a class="nav-item" href="quotes.html">報價管理</a>
+      <a class="nav-item" href="orders.html">訂單管理</a>
+      <a class="nav-item" href="purchase.html">採購管理</a>
+      <a class="nav-item" href="receiving.html">收貨 / QC</a>
+      <a class="nav-item active" href="logistics.html">物流交付</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">營運分析</div>
+      <a class="nav-item" href="supply-performance.html">供應績效</a>
+      <a class="nav-item" href="delivery-risk.html">交期風險</a>
+      <a class="nav-item" href="margin.html">毛利分析</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="search">🔎 搜尋出貨單號、客戶、訂單號、物流商...</div>
+      <div class="top-actions">
+        <div class="icon-btn">🔔 8</div>
+        <div class="user-box"><span class="avatar"></span>
+          <div><div style="font-weight:700;">王怡文</div><div style="font-size:12px;color:var(--subtext);">營運主管</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h2>物流交付</h2>
+        <p>管理禮贈品出貨安排、裝箱明細、物流狀態與客戶簽收確認。出貨放行由 Delta Flow 控管，文件齊備才可放行。</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn secondary">匯出</button>
+        <button class="btn primary">＋ 建立出貨單</button>
+      </div>
+    </div>
+
+    <!-- 放行規則 -->
+    <div class="card" style="margin-bottom:20px; border-left:4px solid var(--purple); background:#faf5ff;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <span class="delta-badge">⚙️ Delta Flow</span>
+        <strong>出貨放行條件</strong>
+      </div>
+      <div class="meta">
+        以下文件全部到位，方可觸發出貨放行節點：<br>
+        ✅ 裝箱明細表（含每箱數量 / 重量 / 品項）&nbsp;&nbsp;
+        ✅ 客戶收貨地址確認函&nbsp;&nbsp;
+        ✅ QC 放行單（批次合格）&nbsp;&nbsp;
+        ✅ 禮贈品貼標確認（Logo / 禮盒組合核對）
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <section class="kpi-grid">
+      <div class="card">
+        <div class="kpi-label">本月出貨筆數</div>
+        <div class="kpi-value">22</div>
+        <div class="kpi-trend trend-info">本週 4 筆</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">待放行 / 文件不齊</div>
+        <div class="kpi-value">3</div>
+        <div class="kpi-trend trend-warn">需補件</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">配送中</div>
+        <div class="kpi-value">5</div>
+        <div class="kpi-trend trend-info">含 2 件今日到達</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">本月準時交付率</div>
+        <div class="kpi-value">91.4%</div>
+        <div class="kpi-trend trend-warn">目標 95%</div>
+      </div>
+    </section>
+
+    <!-- Filter -->
+    <div class="filter-bar">
+      <span class="filter-chip active">全部</span>
+      <span class="filter-chip">文件待補 (3)</span>
+      <span class="filter-chip">待放行 (2)</span>
+      <span class="filter-chip">配送中 (5)</span>
+      <span class="filter-chip">已簽收 (12)</span>
+    </div>
+
+    <!-- Table -->
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>出貨單號</th>
+            <th>關聯訂單</th>
+            <th>客戶</th>
+            <th>交付內容</th>
+            <th>數量</th>
+            <th>物流商</th>
+            <th>客戶活動日</th>
+            <th>放行文件</th>
+            <th>出貨狀態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>DO-20260423-006</td>
+            <td>SO-20260421-003</td>
+            <td>台積電</td>
+            <td>員工禮包組合（3 in 1）</td>
+            <td>1,200 set</td>
+            <td>快捷物流</td>
+            <td><span class="event-date">2026/05/12</span></td>
+            <td>
+              <span class="doc-chip">裝箱明細 ✓</span>
+              <span class="doc-chip">QC 放行 ✓</span>
+              <span class="doc-chip missing">收貨確認 ✗</span>
+            </td>
+            <td><span class="status pending">待文件補齊</span> <span class="delta-badge">△Flow</span></td>
+          </tr>
+
+          <tr>
+            <td>DO-20260422-005</td>
+            <td>SO-20260416-002</td>
+            <td>玉山銀行</td>
+            <td>精裝筆記本（燙金）</td>
+            <td>1,000 pcs</td>
+            <td>宅配通</td>
+            <td><span class="event-date">2026/04/28</span></td>
+            <td>
+              <span class="doc-chip">裝箱明細 ✓</span>
+              <span class="doc-chip">QC 放行 ✓</span>
+              <span class="doc-chip">收貨確認 ✓</span>
+            </td>
+            <td><span class="status shipping">配送中</span></td>
+          </tr>
+
+          <tr>
+            <td>DO-20260422-004</td>
+            <td>SO-20260415-001</td>
+            <td>中華電信</td>
+            <td>客製保溫杯（雷射 Logo）</td>
+            <td>800 pcs</td>
+            <td>快捷物流</td>
+            <td><span class="event-date safe">2026/05/05</span></td>
+            <td>
+              <span class="doc-chip">裝箱明細 ✓</span>
+              <span class="doc-chip missing">QC 放行 ✗</span>
+              <span class="doc-chip missing">收貨確認 ✗</span>
+            </td>
+            <td><span class="status alert">QC 未通過</span> <span class="delta-badge">△Flow</span></td>
+          </tr>
+
+          <tr>
+            <td>DO-240423-002</td>
+            <td>SO-20260419-007</td>
+            <td>台積電</td>
+            <td>台積電員工禮 1,200 set</td>
+            <td>1,200 set</td>
+            <td>快捷物流</td>
+            <td><span class="event-date safe">2026/04/26</span></td>
+            <td>
+              <span class="doc-chip missing">裝箱明細 ✗</span>
+              <span class="doc-chip">QC 放行 ✓</span>
+              <span class="doc-chip missing">收貨確認 ✗</span>
+            </td>
+            <td><span class="status pending">文件待補</span> <span class="delta-badge">△Flow</span></td>
+          </tr>
+
+          <tr>
+            <td>DO-20260421-003</td>
+            <td>SO-20260408-009</td>
+            <td>國泰世華銀行</td>
+            <td>VIP 禮盒（皮革名片夾 + 筆記本）</td>
+            <td>500 set</td>
+            <td>順豐速運</td>
+            <td><span class="event-date safe">2026/04/25</span></td>
+            <td>
+              <span class="doc-chip">裝箱明細 ✓</span>
+              <span class="doc-chip">QC 放行 ✓</span>
+              <span class="doc-chip">收貨確認 ✓</span>
+            </td>
+            <td><span class="status shipping">配送中</span></td>
+          </tr>
+
+          <tr>
+            <td>DO-20260420-002</td>
+            <td>SO-20260402-004</td>
+            <td>中信銀行</td>
+            <td>客製環保袋（滿版印刷）</td>
+            <td>1,500 pcs</td>
+            <td>宅配通</td>
+            <td><span class="event-date safe">2026/04/22</span></td>
+            <td>
+              <span class="doc-chip">裝箱明細 ✓</span>
+              <span class="doc-chip">QC 放行 ✓</span>
+              <span class="doc-chip">收貨確認 ✓</span>
+            </td>
+            <td><span class="status done">已簽收</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer-note">示意用途：Supply Core OS — 物流交付 Mockup ｜ 出貨放行條件由 Delta Flow 控管，n8n 負責物流狀態追蹤推播</div>
+  </main>
+</div>
+</body>
+</html>

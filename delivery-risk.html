@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>交期風險 — Supply Core OS</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    .risk-bar-wrap { display:flex; align-items:center; gap:10px; }
+    .risk-bar-bg   { flex:1; height:8px; background:var(--line); border-radius:999px; overflow:hidden; }
+    .risk-bar-fill { height:100%; border-radius:999px; }
+    .days-chip {
+      display:inline-block; padding:3px 10px; border-radius:999px;
+      font-size:12px; font-weight:700;
+    }
+    .days-chip.urgent { background:var(--red-soft); color:var(--red); }
+    .days-chip.warn   { background:var(--orange-soft); color:var(--orange); }
+    .days-chip.safe   { background:var(--green-soft); color:var(--green); }
+    .delta-badge {
+      display:inline-flex; align-items:center; gap:4px;
+      background:#f3e8ff; color:#7c3aed; border:1px solid #c4b5fd;
+      border-radius:8px; padding:3px 10px; font-size:11px; font-weight:700;
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><h1>Supply Core OS</h1><p>核心業務系統示意畫面</p></div>
+    <div class="nav-group">
+      <div class="nav-title">總覽</div>
+      <a class="nav-item" href="index.html">Dashboard</a>
+      <a class="nav-item" href="todo.html">我的待辦</a>
+      <a class="nav-item" href="exceptions.html">異常中心</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">主資料</div>
+      <a class="nav-item" href="products.html">商品資料</a>
+      <a class="nav-item" href="suppliers.html">供應商資料</a>
+      <a class="nav-item" href="supplier-mapping.html">Supplier Mapping</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">交易作業</div>
+      <a class="nav-item" href="quotes.html">報價管理</a>
+      <a class="nav-item" href="orders.html">訂單管理</a>
+      <a class="nav-item" href="purchase.html">採購管理</a>
+      <a class="nav-item" href="receiving.html">收貨 / QC</a>
+      <a class="nav-item" href="logistics.html">物流交付</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">營運分析</div>
+      <a class="nav-item" href="supply-performance.html">供應績效</a>
+      <a class="nav-item active" href="delivery-risk.html">交期風險</a>
+      <a class="nav-item" href="margin.html">毛利分析</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="search">🔎 搜尋訂單號、客戶、廠商、商品...</div>
+      <div class="top-actions">
+        <div class="icon-btn">🔔 8</div>
+        <div class="user-box"><span class="avatar"></span>
+          <div><div style="font-weight:700;">王怡文</div><div style="font-size:12px;color:var(--subtext);">營運主管</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h2>交期風險</h2>
+        <p>彙整所有進行中訂單的交期緩衝天數、風險來源與影響客戶活動日的急迫程度。活動日比出貨日更關鍵——活動一旦辦完，禮贈品就沒有意義。</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn secondary">匯出清單</button>
+        <button class="btn primary">登錄異常</button>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <section class="kpi-grid">
+      <div class="card">
+        <div class="kpi-label">進行中訂單</div>
+        <div class="kpi-value">31</div>
+        <div class="kpi-trend trend-info">本月接單 12 件</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">高風險（緩衝 ≤ 5 天）</div>
+        <div class="kpi-value">5</div>
+        <div class="kpi-trend trend-alert">需立即介入</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">中風險（6–14 天）</div>
+        <div class="kpi-value">8</div>
+        <div class="kpi-trend trend-warn">需持續監控</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">低風險（≥ 15 天）</div>
+        <div class="kpi-value">18</div>
+        <div class="kpi-trend trend-up">正常推進</div>
+      </div>
+    </section>
+
+    <!-- Filter -->
+    <div class="filter-bar">
+      <span class="filter-chip active">全部 (31)</span>
+      <span class="filter-chip">🔴 高風險 (5)</span>
+      <span class="filter-chip">🟡 中風險 (8)</span>
+      <span class="filter-chip">🟢 低風險 (18)</span>
+    </div>
+
+    <!-- Risk Table -->
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>訂單號</th>
+            <th>客戶</th>
+            <th>品項</th>
+            <th>數量</th>
+            <th>客戶活動日</th>
+            <th>預計出貨日</th>
+            <th>緩衝天數</th>
+            <th>風險來源</th>
+            <th>目前進度</th>
+            <th>風險級別</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>SO-20260418-005</td>
+            <td>元大投信</td>
+            <td>馬克杯（轉印 Logo）200 pcs</td>
+            <td>200 pcs</td>
+            <td><strong style="color:var(--red);">2026/04/30</strong></td>
+            <td style="color:var(--red);">未定</td>
+            <td><span class="days-chip urgent">⚠ 7 天</span></td>
+            <td>Logo 稿未確認，無法開工</td>
+            <td><span class="status alert">阻擋中</span> <span class="delta-badge">△Flow</span></td>
+            <td><span class="risk-high">高</span></td>
+          </tr>
+          <tr>
+            <td>SO-20260423-014</td>
+            <td>國泰人壽</td>
+            <td>保溫杯（雷射 Logo）500 pcs</td>
+            <td>500 pcs</td>
+            <td><strong style="color:var(--red);">2026/05/08</strong></td>
+            <td>2026/05/05</td>
+            <td><span class="days-chip urgent">3 天</span></td>
+            <td>PO 待核准延誤開工</td>
+            <td><span class="status pending">待核准</span></td>
+            <td><span class="risk-high">高</span></td>
+          </tr>
+          <tr>
+            <td>SO-20260419-007</td>
+            <td>遠傳電信</td>
+            <td>帆布環保袋 2,000 pcs</td>
+            <td>2,000 pcs</td>
+            <td><strong style="color:var(--orange);">2026/05/30</strong></td>
+            <td>2026/05/20</td>
+            <td><span class="days-chip warn">10 天</span></td>
+            <td>廠商布料備料不足，預估延 4 天</td>
+            <td><span class="status alert">備料風險</span></td>
+            <td><span class="risk-high">高</span></td>
+          </tr>
+          <tr>
+            <td>SO-20260422-011</td>
+            <td>中信銀行</td>
+            <td>皮革護照夾（壓紋）800 pcs</td>
+            <td>800 pcs</td>
+            <td><strong style="color:var(--orange);">2026/05/20</strong></td>
+            <td>2026/05/12</td>
+            <td><span class="days-chip warn">8 天</span></td>
+            <td>打樣返工中（色差），V2 待客戶確認</td>
+            <td><span class="status pending">打樣中</span></td>
+            <td><span class="risk-mid">中</span></td>
+          </tr>
+          <tr>
+            <td>SO-20260420-009</td>
+            <td>富邦金控</td>
+            <td>不鏽鋼保溫杯 3,000 pcs</td>
+            <td>3,000 pcs</td>
+            <td><strong style="color:var(--orange);">2026/06/05</strong></td>
+            <td>2026/05/25</td>
+            <td><span class="days-chip warn">11 天</span></td>
+            <td>Logo 稿待客戶上傳，開工前提</td>
+            <td><span class="status pending">待 Logo</span></td>
+            <td><span class="risk-mid">中</span></td>
+          </tr>
+          <tr>
+            <td>SO-20260421-003</td>
+            <td>台積電</td>
+            <td>員工禮包組合（3 in 1）1,200 set</td>
+            <td>1,200 set</td>
+            <td><strong style="color:var(--green);">2026/05/12</strong></td>
+            <td>2026/05/08</td>
+            <td><span class="days-chip safe">4 天</span></td>
+            <td>生產中，進度正常</td>
+            <td><span class="status processing">生產中</span></td>
+            <td><span class="risk-low">低</span></td>
+          </tr>
+          <tr>
+            <td>SO-20260416-002</td>
+            <td>玉山銀行</td>
+            <td>精裝筆記本（燙金）1,000 pcs</td>
+            <td>1,000 pcs</td>
+            <td><strong style="color:var(--green);">2026/05/25</strong></td>
+            <td>2026/05/10</td>
+            <td><span class="days-chip safe">15 天</span></td>
+            <td>—</td>
+            <td><span class="status done">待出貨</span></td>
+            <td><span class="risk-low">低</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer-note">示意用途：Supply Core OS — 交期風險 Mockup ｜ 緩衝天數 = 客戶活動日 − 預計出貨日，禮贈品業以活動日為最終 deadline</div>
+  </main>
+</div>
+</body>
+</html>

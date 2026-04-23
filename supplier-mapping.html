@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supplier Mapping — Supply Core OS</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    .badge-incomplete { background:#fef3c7; color:#92400e; border:1px solid #fcd34d; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:600; }
+    .badge-ok         { background:var(--green-soft); color:var(--green); border:1px solid #bbf7d0; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:600; }
+    .badge-block      { background:var(--red-soft); color:var(--red); border:1px solid #fca5a5; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:600; }
+    .craft-tag { display:inline-block; padding:3px 8px; border-radius:6px; font-size:11px; font-weight:600; background:#f1f5f9; color:#475569; margin-right:4px; }
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><h1>Supply Core OS</h1><p>核心業務系統示意畫面</p></div>
+    <div class="nav-group">
+      <div class="nav-title">總覽</div>
+      <a class="nav-item" href="index.html">Dashboard</a>
+      <a class="nav-item" href="todo.html">我的待辦</a>
+      <a class="nav-item" href="exceptions.html">異常中心</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">主資料</div>
+      <a class="nav-item" href="products.html">商品資料</a>
+      <a class="nav-item" href="suppliers.html">供應商資料</a>
+      <a class="nav-item active" href="supplier-mapping.html">Supplier Mapping</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">交易作業</div>
+      <a class="nav-item" href="quotes.html">報價管理</a>
+      <a class="nav-item" href="orders.html">訂單管理</a>
+      <a class="nav-item" href="purchase.html">採購管理</a>
+      <a class="nav-item" href="receiving.html">收貨 / QC</a>
+      <a class="nav-item" href="logistics.html">物流交付</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">營運分析</div>
+      <a class="nav-item" href="supply-performance.html">供應績效</a>
+      <a class="nav-item" href="delivery-risk.html">交期風險</a>
+      <a class="nav-item" href="margin.html">毛利分析</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="search">🔎 搜尋 SKU、商品名稱、供應商、工藝...</div>
+      <div class="top-actions">
+        <div class="icon-btn">🔔 8</div>
+        <div class="user-box"><span class="avatar"></span>
+          <div><div style="font-weight:700;">王怡文</div><div style="font-size:12px;color:var(--subtext);">營運主管</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h2>Supplier Item Mapping</h2>
+        <p>管理每個 SKU 對應的供應商、客製工藝、MOQ、報價與 Lead Time。主資料不完整者，阻擋正式 PO 建立。</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn secondary">匯出</button>
+        <button class="btn primary">＋ 新增 Mapping</button>
+      </div>
+    </div>
+
+    <!-- 阻擋規則說明 — Delta Flow 概念視覺化 -->
+    <div class="card" style="margin-bottom:20px; border-left:4px solid var(--orange); background:#fffbf5;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <span style="font-size:18px;">⚙️</span>
+        <strong>阻擋規則（Delta Flow）</strong>
+      </div>
+      <div class="meta">主資料完整性是正式採購的前提。若 SKU 的 Supplier Mapping 狀態為「未完整」，系統將阻擋對應 PO 建立，並自動派發補齊任務至負責人待辦清單。</div>
+      <div style="display:flex;gap:16px;margin-top:12px;flex-wrap:wrap;">
+        <span>✅ <strong>完整</strong>：供應商 + 工藝 + 報價 + Lead Time 全部填寫 → 可建 PO</span>
+        <span>⚠️ <strong>部分</strong>：缺少報價或 Lead Time → 警告但可暫時建立草稿 PO</span>
+        <span>🚫 <strong>未完整</strong>：無供應商或無工藝確認 → 阻擋，不得進正式交易</span>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <section class="kpi-grid">
+      <div class="card">
+        <div class="kpi-label">SKU Mapping 總數</div>
+        <div class="kpi-value">148</div>
+        <div class="kpi-trend trend-info">對應 312 個 SKU 的主要供應商</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">完整可出單</div>
+        <div class="kpi-value">121</div>
+        <div class="kpi-trend trend-up">81.8%</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">部分完整（警告）</div>
+        <div class="kpi-value">13</div>
+        <div class="kpi-trend trend-warn">缺報價或 Lead Time</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">阻擋中（不得建 PO）</div>
+        <div class="kpi-value">14</div>
+        <div class="kpi-trend trend-alert">需補齊後方可採購</div>
+      </div>
+    </section>
+
+    <!-- Filter -->
+    <div class="filter-bar">
+      <span class="filter-chip active">全部</span>
+      <span class="filter-chip">🚫 阻擋中 (14)</span>
+      <span class="filter-chip">⚠️ 部分完整 (13)</span>
+      <span class="filter-chip">✅ 完整 (121)</span>
+      <span class="filter-chip">保溫杯 / 馬克杯</span>
+      <span class="filter-chip">袋類</span>
+      <span class="filter-chip">3C 周邊</span>
+      <span class="filter-chip">文具 / 辦公</span>
+    </div>
+
+    <!-- Table -->
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>SKU</th>
+            <th>商品名稱</th>
+            <th>客製工藝</th>
+            <th>預設供應商</th>
+            <th>備用供應商</th>
+            <th>MOQ</th>
+            <th>採購單價</th>
+            <th>Lead Time</th>
+            <th>主資料狀態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>SKU-CUP-001</td>
+            <td>304 不鏽鋼保溫杯 500ml</td>
+            <td><span class="craft-tag">雷射雕刻</span><span class="craft-tag">烤漆</span></td>
+            <td>台灣禮品工坊</td>
+            <td>東昇金屬製品</td>
+            <td>100 pcs</td>
+            <td>NT$ 320</td>
+            <td>18 天</td>
+            <td><span class="badge-ok">✅ 完整</span></td>
+          </tr>
+          <tr>
+            <td>SKU-BAG-002</td>
+            <td>帆布環保購物袋</td>
+            <td><span class="craft-tag">絹印</span><span class="craft-tag">刺繡</span></td>
+            <td>富丸製袋廠</td>
+            <td>—</td>
+            <td>200 pcs</td>
+            <td>NT$ 85</td>
+            <td>14 天</td>
+            <td><span class="badge-ok">✅ 完整</span></td>
+          </tr>
+          <tr>
+            <td>SKU-PWR-003</td>
+            <td>商務行動電源 10,000mAh</td>
+            <td><span class="craft-tag">UV 印刷</span></td>
+            <td>華盛電子禮品</td>
+            <td>—</td>
+            <td>50 pcs</td>
+            <td>NT$ 580</td>
+            <td>21 天</td>
+            <td><span class="badge-ok">✅ 完整</span></td>
+          </tr>
+          <tr>
+            <td>SKU-WAL-004</td>
+            <td>皮革名片夾</td>
+            <td><span class="craft-tag">燙金</span><span class="craft-tag">壓紋</span></td>
+            <td>宏達印刷</td>
+            <td>—</td>
+            <td>100 pcs</td>
+            <td style="color:var(--subtext);">未填寫</td>
+            <td>—</td>
+            <td><span class="badge-incomplete">⚠️ 缺 Lead Time</span></td>
+          </tr>
+          <tr>
+            <td>SKU-UMB-005</td>
+            <td>輕量自動收折傘</td>
+            <td><span class="craft-tag">滿版印刷</span></td>
+            <td>—</td>
+            <td>—</td>
+            <td style="color:var(--subtext);">未填寫</td>
+            <td style="color:var(--subtext);">未填寫</td>
+            <td style="color:var(--subtext);">未填寫</td>
+            <td><span class="badge-block">🚫 阻擋</span></td>
+          </tr>
+          <tr>
+            <td>SKU-MUG-006</td>
+            <td>馬克杯 350ml（陶瓷）</td>
+            <td><span class="craft-tag">轉印</span><span class="craft-tag">貼花</span></td>
+            <td>台灣禮品工坊</td>
+            <td>—</td>
+            <td>150 pcs</td>
+            <td style="color:var(--subtext);">未填寫</td>
+            <td>12 天</td>
+            <td><span class="badge-incomplete">⚠️ 缺報價</span></td>
+          </tr>
+          <tr>
+            <td>SKU-NB-007</td>
+            <td>精裝筆記本 A5</td>
+            <td><span class="craft-tag">燙金</span><span class="craft-tag">書脊客製</span></td>
+            <td>文揚印刷</td>
+            <td>廣興書冊印製</td>
+            <td>100 pcs</td>
+            <td>NT$ 145</td>
+            <td>10 天</td>
+            <td><span class="badge-ok">✅ 完整</span></td>
+          </tr>
+          <tr>
+            <td>SKU-LAN-008</td>
+            <td>證件識別吊牌組</td>
+            <td><span class="craft-tag">熱升華</span></td>
+            <td>—</td>
+            <td>—</td>
+            <td style="color:var(--subtext);">未填寫</td>
+            <td style="color:var(--subtext);">未填寫</td>
+            <td style="color:var(--subtext);">未填寫</td>
+            <td><span class="badge-block">🚫 阻擋</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer-note">示意用途：Supply Core OS — Supplier Mapping Mockup ｜ 主資料由核心系統管理，阻擋規則由 Delta Flow 執行</div>
+  </main>
+</div>
+</body>
+</html>

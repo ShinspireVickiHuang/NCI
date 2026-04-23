@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>供應績效 — Supply Core OS</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    .perf-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .perf-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .perf-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .perf-cat  { font-size: 12px; color: var(--subtext); margin-bottom: 14px; }
+    .perf-row  { display: flex; justify-content: space-between; align-items: center; font-size: 13px; margin-bottom: 10px; }
+    .perf-score { font-size: 22px; font-weight: 700; }
+    .grade-A { color: var(--green); }
+    .grade-B { color: var(--primary); }
+    .grade-C { color: var(--orange); }
+    .grade-D { color: var(--red); }
+    @media (max-width: 1100px) { .perf-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 700px)  { .perf-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><h1>Supply Core OS</h1><p>核心業務系統示意畫面</p></div>
+    <div class="nav-group">
+      <div class="nav-title">總覽</div>
+      <a class="nav-item" href="index.html">Dashboard</a>
+      <a class="nav-item" href="todo.html">我的待辦</a>
+      <a class="nav-item" href="exceptions.html">異常中心</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">主資料</div>
+      <a class="nav-item" href="products.html">商品資料</a>
+      <a class="nav-item" href="suppliers.html">供應商資料</a>
+      <a class="nav-item" href="supplier-mapping.html">Supplier Mapping</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">交易作業</div>
+      <a class="nav-item" href="quotes.html">報價管理</a>
+      <a class="nav-item" href="orders.html">訂單管理</a>
+      <a class="nav-item" href="purchase.html">採購管理</a>
+      <a class="nav-item" href="receiving.html">收貨 / QC</a>
+      <a class="nav-item" href="logistics.html">物流交付</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">營運分析</div>
+      <a class="nav-item active" href="supply-performance.html">供應績效</a>
+      <a class="nav-item" href="delivery-risk.html">交期風險</a>
+      <a class="nav-item" href="margin.html">毛利分析</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="search">🔎 搜尋供應商名稱、工藝類別...</div>
+      <div class="top-actions">
+        <div class="icon-btn">🔔 8</div>
+        <div class="user-box"><span class="avatar"></span>
+          <div><div style="font-weight:700;">王怡文</div><div style="font-size:12px;color:var(--subtext);">營運主管</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h2>供應績效</h2>
+        <p>從實際交期、QC 合格率、Logo 印刷準確率等維度，評估各廠商的整體供應表現。資料來自 GRN、QC、PO 歷程回寫。</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn secondary">匯出月報</button>
+        <button class="btn secondary">調整評級</button>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <section class="kpi-grid">
+      <div class="card">
+        <div class="kpi-label">評估廠商數</div>
+        <div class="kpi-value">18</div>
+        <div class="kpi-trend trend-info">本季活躍廠商</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">平均交期達成率</div>
+        <div class="kpi-value">88.6%</div>
+        <div class="kpi-trend trend-warn">目標 93%</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">平均 QC 合格率</div>
+        <div class="kpi-value">91.2%</div>
+        <div class="kpi-trend trend-warn">目標 95%</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">C / D 級（需輔導）</div>
+        <div class="kpi-value">4</div>
+        <div class="kpi-trend trend-alert">需啟動改善計畫</div>
+      </div>
+    </section>
+
+    <!-- Supplier Performance Cards -->
+    <div class="perf-grid">
+
+      <div class="perf-card">
+        <div class="perf-name">台灣禮品工坊</div>
+        <div class="perf-cat">保溫杯 / 金屬禮品 — 雷射 / 烤漆</div>
+        <div class="perf-row"><span>交期達成率</span><span style="font-weight:700;color:var(--green);">95.1%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:95%;background:var(--green);"></div></div>
+        <div class="perf-row"><span>QC 合格率</span><span style="font-weight:700;color:var(--green);">97.3%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:97%;background:var(--green);"></div></div>
+        <div class="perf-row"><span>Logo 印刷準確率</span><span style="font-weight:700;color:var(--green);">98.8%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:98%;background:var(--green);"></div></div>
+        <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;">
+          <span class="tag green">A 級廠商</span>
+          <span class="perf-score grade-A">94.4</span>
+        </div>
+      </div>
+
+      <div class="perf-card">
+        <div class="perf-name">富丸製袋廠</div>
+        <div class="perf-cat">袋類 — 帆布 / 不織布 / 環保袋</div>
+        <div class="perf-row"><span>交期達成率</span><span style="font-weight:700;color:var(--primary);">91.4%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:91%;"></div></div>
+        <div class="perf-row"><span>QC 合格率</span><span style="font-weight:700;color:var(--primary);">93.6%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:93%;"></div></div>
+        <div class="perf-row"><span>Logo 印刷準確率</span><span style="font-weight:700;color:var(--primary);">89.2%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:89%;"></div></div>
+        <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;">
+          <span class="tag blue">B 級廠商</span>
+          <span class="perf-score grade-B">91.4</span>
+        </div>
+      </div>
+
+      <div class="perf-card">
+        <div class="perf-name">文揚印刷</div>
+        <div class="perf-cat">紙品印刷 — 筆記本 / 文件夾 / 書冊</div>
+        <div class="perf-row"><span>交期達成率</span><span style="font-weight:700;color:var(--green);">96.8%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:97%;background:var(--green);"></div></div>
+        <div class="perf-row"><span>QC 合格率</span><span style="font-weight:700;color:var(--green);">98.1%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:98%;background:var(--green);"></div></div>
+        <div class="perf-row"><span>Logo 印刷準確率</span><span style="font-weight:700;color:var(--green);">97.5%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:97%;background:var(--green);"></div></div>
+        <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;">
+          <span class="tag green">A 級廠商</span>
+          <span class="perf-score grade-A">97.5</span>
+        </div>
+      </div>
+
+      <div class="perf-card">
+        <div class="perf-name">宏達印刷</div>
+        <div class="perf-cat">袋類 / 紙品 — 絹印 / 滿版印刷</div>
+        <div class="perf-row"><span>交期達成率</span><span style="font-weight:700;color:var(--orange);">82.3%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:82%;background:var(--orange);"></div></div>
+        <div class="perf-row"><span>QC 合格率</span><span style="font-weight:700;color:var(--orange);">80.5%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:80%;background:var(--orange);"></div></div>
+        <div class="perf-row"><span>Logo 印刷準確率</span><span style="font-weight:700;color:var(--red);">74.1%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:74%;background:var(--red);"></div></div>
+        <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;">
+          <span class="tag orange">C 級 — 觀察中</span>
+          <span class="perf-score grade-C">79.0</span>
+        </div>
+      </div>
+
+      <div class="perf-card">
+        <div class="perf-name">華盛電子禮品</div>
+        <div class="perf-cat">3C 禮品 — 行動電源 / 充電器 / 藍牙耳機</div>
+        <div class="perf-row"><span>交期達成率</span><span style="font-weight:700;color:var(--primary);">88.9%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:89%;"></div></div>
+        <div class="perf-row"><span>QC 合格率</span><span style="font-weight:700;color:var(--orange);">85.2%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:85%;background:var(--orange);"></div></div>
+        <div class="perf-row"><span>品牌貼標準確率</span><span style="font-weight:700;color:var(--primary);">92.4%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:92%;"></div></div>
+        <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;">
+          <span class="tag blue">B 級廠商</span>
+          <span class="perf-score grade-B">88.8</span>
+        </div>
+      </div>
+
+      <div class="perf-card" style="border-left:3px solid var(--red);">
+        <div class="perf-name">東昇金屬製品</div>
+        <div class="perf-cat">金屬禮品 — 保溫杯 / 酒具 / 備用廠</div>
+        <div class="perf-row"><span>交期達成率</span><span style="font-weight:700;color:var(--red);">71.4%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:71%;background:var(--red);"></div></div>
+        <div class="perf-row"><span>QC 合格率</span><span style="font-weight:700;color:var(--red);">76.3%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:76%;background:var(--red);"></div></div>
+        <div class="perf-row"><span>Logo 雷射準確率</span><span style="font-weight:700;color:var(--orange);">81.0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:81%;background:var(--orange);"></div></div>
+        <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;">
+          <span class="tag red">D 級 — 改善計畫</span>
+          <span class="perf-score grade-D">76.2</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-note">示意用途：Supply Core OS — 供應績效 Mockup ｜ 績效數據由 GRN / QC / PO 歷程回寫，供後續主資料調整參考</div>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>供應商資料 — Supply Core OS</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    .supplier-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .supplier-name { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .supplier-cat  { font-size: 12px; color: var(--subtext); margin-bottom: 12px; }
+    .score-row     { display: flex; justify-content: space-between; font-size: 13px; margin-top: 8px; }
+    .supplier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 1100px) { .supplier-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 700px)  { .supplier-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><h1>Supply Core OS</h1><p>核心業務系統示意畫面</p></div>
+    <div class="nav-group">
+      <div class="nav-title">總覽</div>
+      <a class="nav-item" href="index.html">Dashboard</a>
+      <a class="nav-item" href="todo.html">我的待辦</a>
+      <a class="nav-item" href="exceptions.html">異常中心</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">主資料</div>
+      <a class="nav-item" href="products.html">商品資料</a>
+      <a class="nav-item active" href="suppliers.html">供應商資料</a>
+      <a class="nav-item" href="supplier-mapping.html">Supplier Mapping</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">交易作業</div>
+      <a class="nav-item" href="quotes.html">報價管理</a>
+      <a class="nav-item" href="orders.html">訂單管理</a>
+      <a class="nav-item" href="purchase.html">採購管理</a>
+      <a class="nav-item" href="receiving.html">收貨 / QC</a>
+      <a class="nav-item" href="logistics.html">物流交付</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">營運分析</div>
+      <a class="nav-item" href="supply-performance.html">供應績效</a>
+      <a class="nav-item" href="delivery-risk.html">交期風險</a>
+      <a class="nav-item" href="margin.html">毛利分析</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="search">🔎 搜尋供應商名稱、類別、聯絡人...</div>
+      <div class="top-actions">
+        <div class="icon-btn">🔔 8</div>
+        <div class="user-box">
+          <span class="avatar"></span>
+          <div><div style="font-weight:700;">王怡文</div><div style="font-size:12px;color:var(--subtext);">營運主管</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h2>供應商資料</h2>
+        <p>管理所有供應商的基本資料、聯絡窗口、付款條件與績效評分。</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn secondary">匯出清單</button>
+        <button class="btn primary">＋ 新增供應商</button>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <section class="kpi-grid">
+      <div class="card">
+        <div class="kpi-label">供應商總數</div>
+        <div class="kpi-value">48</div>
+        <div class="kpi-trend trend-info">合作中 42 家</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">平均交期達成率</div>
+        <div class="kpi-value">91.4%</div>
+        <div class="kpi-trend trend-warn">目標 95%</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">平均 QC 合格率</div>
+        <div class="kpi-value">96.8%</div>
+        <div class="kpi-trend trend-up">良好</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">評級警示</div>
+        <div class="kpi-value">3</div>
+        <div class="kpi-trend trend-alert">需觀察輔導</div>
+      </div>
+    </section>
+
+    <!-- Filter -->
+    <div class="filter-bar">
+      <span class="filter-chip active">全部</span>
+      <span class="filter-chip">機構件</span>
+      <span class="filter-chip">電子元件</span>
+      <span class="filter-chip">包材 / 耗材</span>
+      <span class="filter-chip">物流</span>
+    </div>
+
+    <!-- Supplier Cards -->
+    <div class="supplier-grid">
+
+      <div class="supplier-card">
+        <div class="supplier-name">台灣精準工業</div>
+        <div class="supplier-cat">機構件 — 鋁件 / 鑄造</div>
+        <div class="meta">統編：12345678｜聯絡人：張志明｜02-2345-6789</div>
+        <div class="meta">付款條件：月結 30 天｜幣別：NTD</div>
+        <div class="score-row">
+          <span>交期達成率</span><span style="font-weight:700;color:var(--green);">94.2%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:94%;background:var(--green);"></div></div>
+        <div class="score-row">
+          <span>QC 合格率</span><span style="font-weight:700;color:var(--green);">98.5%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:98%;background:var(--green);"></div></div>
+        <div style="margin-top:12px;"><span class="tag green">A 級供應商</span></div>
+      </div>
+
+      <div class="supplier-card">
+        <div class="supplier-name">宇翔電子</div>
+        <div class="supplier-cat">電子元件 — PCB / 模組</div>
+        <div class="meta">統編：87654321｜聯絡人：吳雅慧｜03-4567-8901</div>
+        <div class="meta">付款條件：月結 45 天｜幣別：NTD</div>
+        <div class="score-row">
+          <span>交期達成率</span><span style="font-weight:700;color:var(--primary);">89.7%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:90%;"></div></div>
+        <div class="score-row">
+          <span>QC 合格率</span><span style="font-weight:700;color:var(--green);">97.1%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:97%;background:var(--green);"></div></div>
+        <div style="margin-top:12px;"><span class="tag blue">B 級供應商</span></div>
+      </div>
+
+      <div class="supplier-card">
+        <div class="supplier-name">鴻展材料</div>
+        <div class="supplier-cat">包材 — 紙箱 / 緩衝材</div>
+        <div class="meta">統編：23456789｜聯絡人：黃宗翰｜04-5678-9012</div>
+        <div class="meta">付款條件：月結 30 天｜幣別：NTD</div>
+        <div class="score-row">
+          <span>交期達成率</span><span style="font-weight:700;color:var(--orange);">82.3%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:82%;background:var(--orange);"></div></div>
+        <div class="score-row">
+          <span>QC 合格率</span><span style="font-weight:700;color:var(--orange);">88.6%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:88%;background:var(--orange);"></div></div>
+        <div style="margin-top:12px;"><span class="tag orange">C 級 — 觀察中</span></div>
+      </div>
+
+      <div class="supplier-card">
+        <div class="supplier-name">創誠五金</div>
+        <div class="supplier-cat">機構件 — 五金 / 螺絲</div>
+        <div class="meta">統編：34567890｜聯絡人：劉建宏｜06-6789-0123</div>
+        <div class="meta">付款條件：月結 30 天｜幣別：NTD</div>
+        <div class="score-row">
+          <span>交期達成率</span><span style="font-weight:700;color:var(--orange);">83.1%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:83%;background:var(--orange);"></div></div>
+        <div class="score-row">
+          <span>QC 合格率</span><span style="font-weight:700;color:var(--primary);">93.4%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:93%;"></div></div>
+        <div style="margin-top:12px;"><span class="tag orange">C 級 — 觀察中</span></div>
+      </div>
+
+      <div class="supplier-card">
+        <div class="supplier-name">全盛塑料</div>
+        <div class="supplier-cat">機構件 — 射出成型</div>
+        <div class="meta">統編：45678901｜聯絡人：陳美如｜07-7890-1234</div>
+        <div class="meta">付款條件：月結 30 天｜幣別：NTD</div>
+        <div class="score-row">
+          <span>交期達成率</span><span style="font-weight:700;color:var(--green);">95.8%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:96%;background:var(--green);"></div></div>
+        <div class="score-row">
+          <span>QC 合格率</span><span style="font-weight:700;color:var(--primary);">94.2%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:94%;"></div></div>
+        <div style="margin-top:12px;"><span class="tag green">A 級供應商</span></div>
+      </div>
+
+      <div class="supplier-card">
+        <div class="supplier-name">宏信物流</div>
+        <div class="supplier-cat">物流 — 台灣、東南亞</div>
+        <div class="meta">統編：56789012｜聯絡人：許志偉｜02-8901-2345</div>
+        <div class="meta">付款條件：月結 30 天｜幣別：NTD</div>
+        <div class="score-row">
+          <span>準時送達率</span><span style="font-weight:700;color:var(--green);">96.1%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:96%;background:var(--green);"></div></div>
+        <div class="score-row">
+          <span>文件完整率</span><span style="font-weight:700;color:var(--orange);">87.5%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:87%;background:var(--orange);"></div></div>
+        <div style="margin-top:12px;"><span class="tag blue">B 級供應商</span></div>
+      </div>
+
+    </div>
+
+    <div class="footer-note">示意用途：Supply Core OS — 供應商資料 Mockup</div>
+  </main>
+</div>
+</body>
+</html>

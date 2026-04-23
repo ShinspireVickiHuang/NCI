@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>訂單管理 — Supply Core OS</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    .delta-badge {
+      display:inline-flex; align-items:center; gap:4px;
+      background:#f3e8ff; color:#7c3aed; border:1px solid #c4b5fd;
+      border-radius:8px; padding:3px 10px; font-size:11px; font-weight:700;
+    }
+    .event-date {
+      font-size:12px; color:var(--red); font-weight:700;
+      background:var(--red-soft); padding:3px 8px; border-radius:6px;
+    }
+    .event-date.safe {
+      color:var(--green); background:var(--green-soft);
+    }
+    .craft-tag { display:inline-block; padding:3px 8px; border-radius:6px; font-size:11px; font-weight:600; background:#f1f5f9; color:#475569; margin-right:4px; }
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><h1>Supply Core OS</h1><p>核心業務系統示意畫面</p></div>
+    <div class="nav-group">
+      <div class="nav-title">總覽</div>
+      <a class="nav-item" href="index.html">Dashboard</a>
+      <a class="nav-item" href="todo.html">我的待辦</a>
+      <a class="nav-item" href="exceptions.html">異常中心</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">主資料</div>
+      <a class="nav-item" href="products.html">商品資料</a>
+      <a class="nav-item" href="suppliers.html">供應商資料</a>
+      <a class="nav-item" href="supplier-mapping.html">Supplier Mapping</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">交易作業</div>
+      <a class="nav-item" href="quotes.html">報價管理</a>
+      <a class="nav-item active" href="orders.html">訂單管理</a>
+      <a class="nav-item" href="purchase.html">採購管理</a>
+      <a class="nav-item" href="receiving.html">收貨 / QC</a>
+      <a class="nav-item" href="logistics.html">物流交付</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">營運分析</div>
+      <a class="nav-item" href="supply-performance.html">供應績效</a>
+      <a class="nav-item" href="delivery-risk.html">交期風險</a>
+      <a class="nav-item" href="margin.html">毛利分析</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="search">🔎 搜尋訂單號、客戶、活動名稱、商品...</div>
+      <div class="top-actions">
+        <div class="icon-btn">🔔 8</div>
+        <div class="user-box"><span class="avatar"></span>
+          <div><div style="font-weight:700;">王怡文</div><div style="font-size:12px;color:var(--subtext);">營運主管</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h2>訂單管理</h2>
+        <p>管理客戶禮贈品訂單，包含商品組合、客製規格、Logo 稿確認、打樣版本與活動截止日追蹤。</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn secondary">匯出</button>
+        <button class="btn primary">＋ 建立訂單</button>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <section class="kpi-grid">
+      <div class="card">
+        <div class="kpi-label">進行中訂單</div>
+        <div class="kpi-value">31</div>
+        <div class="kpi-trend trend-info">本月新接 12 件</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">待確認規格 / Logo</div>
+        <div class="kpi-value">6</div>
+        <div class="kpi-trend trend-warn">未確認無法建 PO</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">打樣待客戶回覆</div>
+        <div class="kpi-value">4</div>
+        <div class="kpi-trend trend-warn">逾 3 天未回覆</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">活動日 ≤ 14 天</div>
+        <div class="kpi-value">7</div>
+        <div class="kpi-trend trend-alert">高急迫性</div>
+      </div>
+    </section>
+
+    <!-- Filter -->
+    <div class="filter-bar">
+      <span class="filter-chip active">全部 (31)</span>
+      <span class="filter-chip">待規格確認 (6)</span>
+      <span class="filter-chip">打樣中 (4)</span>
+      <span class="filter-chip">生產中 (12)</span>
+      <span class="filter-chip">待出貨 (5)</span>
+      <span class="filter-chip">已交付 (4)</span>
+    </div>
+
+    <!-- Table -->
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>訂單號</th>
+            <th>客戶</th>
+            <th>活動 / 用途</th>
+            <th>品項摘要</th>
+            <th>客製工藝</th>
+            <th>數量</th>
+            <th>活動截止日</th>
+            <th>Logo 狀態</th>
+            <th>打樣版本</th>
+            <th>訂單狀態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>SO-20260421-003</td>
+            <td>台積電</td>
+            <td>新進員工禮包</td>
+            <td>保溫杯 + 環保袋 + 筆記本 組合</td>
+            <td><span class="craft-tag">雷射</span><span class="craft-tag">絹印</span><span class="craft-tag">燙金</span></td>
+            <td>1,200 set</td>
+            <td><span class="event-date">2026/05/12</span></td>
+            <td><span class="status done">已確認</span></td>
+            <td>V2 ✅</td>
+            <td><span class="status processing">生產中</span></td>
+          </tr>
+          <tr>
+            <td>SO-20260423-014</td>
+            <td>國泰人壽</td>
+            <td>業績獎勵禮</td>
+            <td>客製保溫杯 500 pcs</td>
+            <td><span class="craft-tag">雷射雕刻</span></td>
+            <td>500 pcs</td>
+            <td><span class="event-date">2026/05/08</span></td>
+            <td><span class="status done">已確認</span></td>
+            <td>V1 ✅</td>
+            <td><span class="status processing">生產中</span></td>
+          </tr>
+          <tr>
+            <td>SO-20260422-011</td>
+            <td>中信銀行</td>
+            <td>貴賓禮贈品</td>
+            <td>皮革護照夾（壓紋 Logo）800 pcs</td>
+            <td><span class="craft-tag">壓紋</span><span class="craft-tag">燙金</span></td>
+            <td>800 pcs</td>
+            <td><span class="event-date">2026/05/20</span></td>
+            <td><span class="status pending">待確認</span></td>
+            <td>打樣中</td>
+            <td><span class="status pending">待打樣確認</span></td>
+          </tr>
+          <tr>
+            <td>SO-20260420-009</td>
+            <td>富邦金控</td>
+            <td>股東會紀念品</td>
+            <td>不鏽鋼保溫杯（雷射 Logo）3,000 pcs</td>
+            <td><span class="craft-tag">雷射雕刻</span></td>
+            <td>3,000 pcs</td>
+            <td><span class="event-date">2026/06/05</span></td>
+            <td><span class="status pending">待上傳</span></td>
+            <td>—</td>
+            <td><span class="status pending">待規格確認</span></td>
+          </tr>
+          <tr>
+            <td>SO-20260419-007</td>
+            <td>遠傳電信</td>
+            <td>週年慶活動禮</td>
+            <td>帆布環保袋（滿版印刷）2,000 pcs</td>
+            <td><span class="craft-tag">滿版絹印</span></td>
+            <td>2,000 pcs</td>
+            <td><span class="event-date safe">2026/05/30</span></td>
+            <td><span class="status done">已確認</span></td>
+            <td>V3 ✅</td>
+            <td><span class="status processing">生產中</span></td>
+          </tr>
+          <tr>
+            <td>SO-20260418-005</td>
+            <td>元大投信</td>
+            <td>法說會禮品</td>
+            <td>馬克杯（轉印 Logo）200 pcs</td>
+            <td><span class="craft-tag">轉印</span></td>
+            <td>200 pcs</td>
+            <td><span class="event-date">2026/04/30</span></td>
+            <td><span class="status alert">規格待補</span></td>
+            <td>—</td>
+            <td><span class="status alert">阻擋</span> <span class="delta-badge">△Flow</span></td>
+          </tr>
+          <tr>
+            <td>SO-20260416-002</td>
+            <td>玉山銀行</td>
+            <td>開幕活動禮</td>
+            <td>精裝筆記本（書脊燙金）× 1,000 pcs</td>
+            <td><span class="craft-tag">燙金</span></td>
+            <td>1,000 pcs</td>
+            <td><span class="event-date safe">2026/05/25</span></td>
+            <td><span class="status done">已確認</span></td>
+            <td>V1 ✅</td>
+            <td><span class="status done">待出貨</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer-note">示意用途：Supply Core OS — 訂單管理 Mockup ｜ 規格未確認時，Delta Flow 阻擋 PO 建立</div>
+  </main>
+</div>
+</body>
+</html>

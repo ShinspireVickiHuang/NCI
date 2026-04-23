@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>收貨 / QC — Supply Core OS</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    .delta-badge {
+      display:inline-flex; align-items:center; gap:4px;
+      background:#f3e8ff; color:#7c3aed; border:1px solid #c4b5fd;
+      border-radius:8px; padding:3px 10px; font-size:11px; font-weight:700;
+    }
+    .qc-flow {
+      display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+      background:#f8fafc; border:1px solid var(--line); border-radius:14px; padding:14px 18px;
+      margin-bottom:20px;
+    }
+    .qc-node { padding:6px 14px; border-radius:10px; font-size:13px; font-weight:600; border:1px solid var(--line); background:#fff; }
+    .qc-node.pass { background:var(--green-soft); color:var(--green); border-color:#86efac; }
+    .qc-node.fail { background:var(--red-soft); color:var(--red); border-color:#fca5a5; }
+    .qc-node.active { background:var(--primary-soft); color:var(--primary); border-color:#93c5fd; }
+    .defect-tag { display:inline-block; padding:3px 8px; border-radius:6px; font-size:11px; font-weight:600; background:var(--red-soft); color:var(--red); margin-right:4px; }
+    .defect-tag.minor { background:var(--orange-soft); color:var(--orange); }
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><h1>Supply Core OS</h1><p>核心業務系統示意畫面</p></div>
+    <div class="nav-group">
+      <div class="nav-title">總覽</div>
+      <a class="nav-item" href="index.html">Dashboard</a>
+      <a class="nav-item" href="todo.html">我的待辦</a>
+      <a class="nav-item" href="exceptions.html">異常中心</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">主資料</div>
+      <a class="nav-item" href="products.html">商品資料</a>
+      <a class="nav-item" href="suppliers.html">供應商資料</a>
+      <a class="nav-item" href="supplier-mapping.html">Supplier Mapping</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">交易作業</div>
+      <a class="nav-item" href="quotes.html">報價管理</a>
+      <a class="nav-item" href="orders.html">訂單管理</a>
+      <a class="nav-item" href="purchase.html">採購管理</a>
+      <a class="nav-item active" href="receiving.html">收貨 / QC</a>
+      <a class="nav-item" href="logistics.html">物流交付</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">營運分析</div>
+      <a class="nav-item" href="supply-performance.html">供應績效</a>
+      <a class="nav-item" href="delivery-risk.html">交期風險</a>
+      <a class="nav-item" href="margin.html">毛利分析</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="search">🔎 搜尋 GRN 號、PO、廠商、商品...</div>
+      <div class="top-actions">
+        <div class="icon-btn">🔔 8</div>
+        <div class="user-box"><span class="avatar"></span>
+          <div><div style="font-weight:700;">王怡文</div><div style="font-size:12px;color:var(--subtext);">營運主管</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h2>收貨 / QC 驗收</h2>
+        <p>記錄到貨收料與品質驗收結果。GRN 資料存於核心系統；合格 / 不合格處置流程由 Delta Flow 管理。</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn secondary">匯出報表</button>
+        <button class="btn primary">＋ 建立 GRN</button>
+      </div>
+    </div>
+
+    <!-- QC 流程 -->
+    <div class="qc-flow">
+      <div style="font-size:12px;color:var(--subtext);margin-right:4px;"><span class="delta-badge">⚙️ Delta Flow</span> 驗收處置流程</div>
+      <div class="qc-node">到貨登錄</div>
+      <span style="color:var(--subtext);">→</span>
+      <div class="qc-node active">IQC 抽驗</div>
+      <span style="color:var(--subtext);">→</span>
+      <div class="qc-node pass">合格 → 放行入庫</div>
+      <span style="color:var(--subtext);">/</span>
+      <div class="qc-node fail">不合格 → 判定流程</div>
+      <span style="color:var(--subtext);">→</span>
+      <div class="qc-node">退貨 / 補貨 / 特採 / 報廢</div>
+    </div>
+
+    <!-- KPI -->
+    <section class="kpi-grid">
+      <div class="card">
+        <div class="kpi-label">本月收貨筆數</div>
+        <div class="kpi-value">34</div>
+        <div class="kpi-trend trend-info">今日到貨 3 批</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">QC 合格率（本月）</div>
+        <div class="kpi-value">91.2%</div>
+        <div class="kpi-trend trend-warn">目標 95%</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">待驗收</div>
+        <div class="kpi-value">6</div>
+        <div class="kpi-trend trend-warn">2 件已超 24hr</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">不合格待處置</div>
+        <div class="kpi-value">3</div>
+        <div class="kpi-trend trend-alert">Delta Flow 進行中</div>
+      </div>
+    </section>
+
+    <!-- Filter -->
+    <div class="filter-bar">
+      <span class="filter-chip active">全部</span>
+      <span class="filter-chip">待驗收 (6)</span>
+      <span class="filter-chip">驗收中 (2)</span>
+      <span class="filter-chip">合格放行 (23)</span>
+      <span class="filter-chip">不合格處置中 (3)</span>
+    </div>
+
+    <!-- Table -->
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>GRN 號</th>
+            <th>關聯 PO</th>
+            <th>廠商</th>
+            <th>品項</th>
+            <th>到貨數量</th>
+            <th>驗收結果</th>
+            <th>不良類型</th>
+            <th>不良率</th>
+            <th>處置方式</th>
+            <th>GRN 狀態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>GRN-20260423-008</td>
+            <td>PO-20260421-001C</td>
+            <td>文揚印刷</td>
+            <td>精裝筆記本 A5（燙金書脊）</td>
+            <td>1,260 pcs</td>
+            <td><span class="status done">合格</span></td>
+            <td>—</td>
+            <td>0%</td>
+            <td>放行入庫</td>
+            <td><span class="status done">已放行</span></td>
+          </tr>
+          <tr>
+            <td>GRN-20260423-007</td>
+            <td>PO-20260419-006</td>
+            <td>宏達印刷</td>
+            <td>帆布環保袋（絹印 Logo）</td>
+            <td>2,050 pcs</td>
+            <td><span class="status alert">不合格</span></td>
+            <td><span class="defect-tag">印刷位置偏移</span></td>
+            <td>8.3%</td>
+            <td>退廠重工 / 補貨</td>
+            <td><span class="status alert">處置中</span> <span class="delta-badge">△Flow</span></td>
+          </tr>
+          <tr>
+            <td>GRN-20260423-006</td>
+            <td>PO-20260420-004</td>
+            <td>宏達印刷</td>
+            <td>帆布環保袋（滿版絹印）300 pcs</td>
+            <td>300 pcs</td>
+            <td><span class="status alert">不合格</span></td>
+            <td><span class="defect-tag">Logo 印刷偏移 8mm</span><span class="defect-tag minor">底色不均</span></td>
+            <td>100%</td>
+            <td>全批退廠重工</td>
+            <td><span class="status alert">待判定</span> <span class="delta-badge">△Flow</span></td>
+          </tr>
+          <tr>
+            <td>GRN-20260422-005</td>
+            <td>PO-20260421-001B</td>
+            <td>富丸製袋廠</td>
+            <td>帆布環保袋白胚</td>
+            <td>1,300 pcs</td>
+            <td><span class="status done">合格</span></td>
+            <td>—</td>
+            <td>0%</td>
+            <td>放行入庫</td>
+            <td><span class="status done">已放行</span></td>
+          </tr>
+          <tr>
+            <td>GRN-20260422-004</td>
+            <td>PO-20260420-003</td>
+            <td>台灣禮品工坊</td>
+            <td>304 不鏽鋼保溫杯白胚</td>
+            <td>520 pcs</td>
+            <td><span class="status pending">待驗收</span></td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td><span class="status pending">待 IQC</span></td>
+          </tr>
+          <tr>
+            <td>GRN-20260421-003</td>
+            <td>PO-20260418-002</td>
+            <td>華盛電子禮品</td>
+            <td>行動電源電芯白料</td>
+            <td>320 pcs</td>
+            <td><span class="status alert">不合格</span></td>
+            <td><span class="defect-tag minor">充電容量偏低（9,400mAh）</span></td>
+            <td>5%</td>
+            <td>特採評估中</td>
+            <td><span class="status pending">特採審核</span> <span class="delta-badge">△Flow</span></td>
+          </tr>
+          <tr>
+            <td>GRN-20260420-002</td>
+            <td>PO-20260416-001</td>
+            <td>文揚印刷</td>
+            <td>精裝筆記本 A5（素面）</td>
+            <td>1,050 pcs</td>
+            <td><span class="status done">合格</span></td>
+            <td>—</td>
+            <td>0%</td>
+            <td>放行入庫</td>
+            <td><span class="status done">已放行</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer-note">示意用途：Supply Core OS — 收貨 / QC Mockup ｜ GRN 資料存於核心系統，處置流程由 Delta Flow 執行</div>
+  </main>
+</div>
+</body>
+</html>

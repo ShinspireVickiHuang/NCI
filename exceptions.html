@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>異常中心 — Supply Core OS</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><h1>Supply Core OS</h1><p>核心業務系統示意畫面</p></div>
+    <div class="nav-group">
+      <div class="nav-title">總覽</div>
+      <a class="nav-item" href="index.html">Dashboard</a>
+      <a class="nav-item" href="todo.html">我的待辦</a>
+      <a class="nav-item active" href="exceptions.html">異常中心</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">主資料</div>
+      <a class="nav-item" href="products.html">商品資料</a>
+      <a class="nav-item" href="suppliers.html">供應商資料</a>
+      <a class="nav-item" href="supplier-mapping.html">Supplier Mapping</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">交易作業</div>
+      <a class="nav-item" href="quotes.html">報價管理</a>
+      <a class="nav-item" href="orders.html">訂單管理</a>
+      <a class="nav-item" href="purchase.html">採購管理</a>
+      <a class="nav-item" href="receiving.html">收貨 / QC</a>
+      <a class="nav-item" href="logistics.html">物流交付</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">營運分析</div>
+      <a class="nav-item" href="supply-performance.html">供應績效</a>
+      <a class="nav-item" href="delivery-risk.html">交期風險</a>
+      <a class="nav-item" href="margin.html">毛利分析</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="search">🔎 搜尋異常案件、單號、供應商...</div>
+      <div class="top-actions">
+        <div class="icon-btn">🔔 8</div>
+        <div class="user-box">
+          <span class="avatar"></span>
+          <div><div style="font-weight:700;">王怡文</div><div style="font-size:12px;color:var(--subtext);">營運主管</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h2>異常中心</h2>
+        <p>集中管理品質異常、交期延誤、文件缺失與毛利預警等各類問題，追蹤處置進度。</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn secondary">匯出報表</button>
+        <button class="btn primary">＋ 登錄異常</button>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <section class="kpi-grid">
+      <div class="card">
+        <div class="kpi-label">進行中異常</div>
+        <div class="kpi-value">9</div>
+        <div class="kpi-trend trend-warn">本週新增 3 件</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">高優先級</div>
+        <div class="kpi-value">3</div>
+        <div class="kpi-trend trend-alert">需立即處理</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">已逾 SLA</div>
+        <div class="kpi-value">2</div>
+        <div class="kpi-trend trend-alert">超過處理時限</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">本月已結案</div>
+        <div class="kpi-value">14</div>
+        <div class="kpi-trend trend-up">結案率 61%</div>
+      </div>
+    </section>
+
+    <!-- Filter -->
+    <div class="filter-bar">
+      <span class="filter-chip active">全部 (9)</span>
+      <span class="filter-chip">Logo 印刷異常 (3)</span>
+      <span class="filter-chip">交期延誤 (3)</span>
+      <span class="filter-chip">文件缺失 (2)</span>
+      <span class="filter-chip">毛利預警 (1)</span>
+    </div>
+
+    <!-- Exceptions Table -->
+    <div class="table-card">
+      <div class="section-title" style="padding:18px 18px 0 18px;">
+        <h3>異常事件清單</h3>
+        <span>依優先級排序</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>案件號</th>
+            <th>異常類型</th>
+            <th>相關單號</th>
+            <th>供應商 / 廠商</th>
+            <th>說明</th>
+            <th>優先級</th>
+            <th>狀態</th>
+            <th>負責人</th>
+            <th>已逾期</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>EXC-20260423-001</td>
+            <td>交期延誤</td>
+            <td>PO-20260421-009</td>
+            <td>創誠五金</td>
+            <td>原料缺貨，預估延後 3 天</td>
+            <td><span class="risk-high">高</span></td>
+            <td><span class="status pending">處置中</span></td>
+            <td>陳採購</td>
+            <td><span class="tag red">逾 SLA</span></td>
+          </tr>
+          <tr>
+            <td>EXC-20260423-002</td>
+            <td>品質異常</td>
+            <td>GRN-20260423-006</td>
+            <td>鴻展材料</td>
+            <td>外觀刮傷 + 尺寸偏差 ±0.3mm</td>
+            <td><span class="risk-high">高</span></td>
+            <td><span class="status alert">待判定</span></td>
+            <td>林 QC</td>
+            <td><span class="tag red">逾 SLA</span></td>
+          </tr>
+          <tr>
+            <td>EXC-20260423-003</td>
+            <td>毛利預警</td>
+            <td>SO-20260420-031</td>
+            <td>永聚科技（客戶）</td>
+            <td>物流成本偏高，毛利率低於 12% 預警值</td>
+            <td><span class="risk-high">高</span></td>
+            <td><span class="status pending">分析中</span></td>
+            <td>王主管</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>EXC-20260423-004</td>
+            <td>文件缺失</td>
+            <td>DO-240423-002</td>
+            <td>宏信物流</td>
+            <td>缺少 Packing List、商業發票</td>
+            <td><span class="risk-mid">中</span></td>
+            <td><span class="status pending">補件中</span></td>
+            <td>李業務</td>
+            <td><span class="tag red">逾 SLA</span></td>
+          </tr>
+          <tr>
+            <td>EXC-20260422-005</td>
+            <td>品質異常</td>
+            <td>GRN-20260422-004</td>
+            <td>台灣精準工業</td>
+            <td>鋁件表面氧化，目視不良率 8%</td>
+            <td><span class="risk-mid">中</span></td>
+            <td><span class="status pending">待廠商回覆</span></td>
+            <td>林 QC</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>EXC-20260422-006</td>
+            <td>交期延誤</td>
+            <td>PO-20260419-003</td>
+            <td>宇翔電子</td>
+            <td>機台故障，預估延後 2 天</td>
+            <td><span class="risk-mid">中</span></td>
+            <td><span class="status processing">監控中</span></td>
+            <td>陳採購</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>EXC-20260421-007</td>
+            <td>品質異常</td>
+            <td>GRN-20260421-002</td>
+            <td>全盛塑料</td>
+            <td>射出件翹曲，超出公差 0.5mm</td>
+            <td><span class="risk-low">低</span></td>
+            <td><span class="status processing">特採審核</span></td>
+            <td>林 QC</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>EXC-20260420-008</td>
+            <td>文件缺失</td>
+            <td>GRN-20260422-004</td>
+            <td>台灣精準工業</td>
+            <td>缺材質報告（CoC）、出廠檢驗報告</td>
+            <td><span class="risk-low">低</span></td>
+            <td><span class="status processing">補件中</span></td>
+            <td>林業務</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer-note">示意用途：Supply Core OS — 異常中心 Mockup</div>
+  </main>
+</div>
+</body>
+</html>

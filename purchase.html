@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>採購管理 — Supply Core OS</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    .delta-badge {
+      display:inline-flex; align-items:center; gap:4px;
+      background:#f3e8ff; color:#7c3aed; border:1px solid #c4b5fd;
+      border-radius:8px; padding:3px 10px; font-size:11px; font-weight:700;
+    }
+    .sub-po { background:#f8fafc; border-left:3px solid var(--primary); }
+    .po-group { border-top: 2px solid var(--line); }
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><h1>Supply Core OS</h1><p>核心業務系統示意畫面</p></div>
+    <div class="nav-group">
+      <div class="nav-title">總覽</div>
+      <a class="nav-item" href="index.html">Dashboard</a>
+      <a class="nav-item" href="todo.html">我的待辦</a>
+      <a class="nav-item" href="exceptions.html">異常中心</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">主資料</div>
+      <a class="nav-item" href="products.html">商品資料</a>
+      <a class="nav-item" href="suppliers.html">供應商資料</a>
+      <a class="nav-item" href="supplier-mapping.html">Supplier Mapping</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">交易作業</div>
+      <a class="nav-item" href="quotes.html">報價管理</a>
+      <a class="nav-item" href="orders.html">訂單管理</a>
+      <a class="nav-item active" href="purchase.html">採購管理</a>
+      <a class="nav-item" href="receiving.html">收貨 / QC</a>
+      <a class="nav-item" href="logistics.html">物流交付</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">營運分析</div>
+      <a class="nav-item" href="supply-performance.html">供應績效</a>
+      <a class="nav-item" href="delivery-risk.html">交期風險</a>
+      <a class="nav-item" href="margin.html">毛利分析</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="search">🔎 搜尋 PO 號、廠商、商品、訂單號...</div>
+      <div class="top-actions">
+        <div class="icon-btn">🔔 8</div>
+        <div class="user-box"><span class="avatar"></span>
+          <div><div style="font-weight:700;">王怡文</div><div style="font-size:12px;color:var(--subtext);">營運主管</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h2>採購管理</h2>
+        <p>管理 Parent PO 與 Sub-PO（白胚、加工、包裝拆單），PO 核准由 Delta Flow 管理，規格/供應不匹配時自動阻擋。</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn secondary">匯出</button>
+        <button class="btn primary">＋ 建立 PO</button>
+      </div>
+    </div>
+
+    <!-- 阻擋規則說明 -->
+    <div class="card" style="margin-bottom:20px; border-left:4px solid var(--purple); background:#faf5ff;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <span class="delta-badge">⚙️ Delta Flow</span>
+        <strong>PO 核准流程 + 阻擋規則</strong>
+      </div>
+      <div class="meta">
+        PO 建立後進入核准流程。以下兩種情況系統自動阻擋：<br>
+        🚫 <strong>Supplier Mapping 未完整</strong>（無指定供應商或工藝未確認）→ 無法建立 Sub-PO<br>
+        🚫 <strong>訂單規格未確認</strong>（Logo 稿未上傳或客戶未確認打樣）→ 無法建立白胚以外的加工 PO
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <section class="kpi-grid">
+      <div class="card">
+        <div class="kpi-label">進行中 PO</div>
+        <div class="kpi-value">27</div>
+        <div class="kpi-trend trend-info">含 18 個 Sub-PO</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">待核准（Delta Flow）</div>
+        <div class="kpi-value">4</div>
+        <div class="kpi-trend trend-warn">含 1 件今日截止</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">交期風險 PO</div>
+        <div class="kpi-value">3</div>
+        <div class="kpi-trend trend-alert">廠商回報備料不足</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">本月採購金額</div>
+        <div class="kpi-value">NT$ 4.2M</div>
+        <div class="kpi-trend trend-up">較上月 +8%</div>
+      </div>
+    </section>
+
+    <!-- Filter -->
+    <div class="filter-bar">
+      <span class="filter-chip active">全部</span>
+      <span class="filter-chip">待核准 (4)</span>
+      <span class="filter-chip">生產中 (14)</span>
+      <span class="filter-chip">待收貨 (6)</span>
+      <span class="filter-chip">交期風險 (3)</span>
+      <span class="filter-chip">已完成 (0)</span>
+    </div>
+
+    <!-- PO Table with Parent / Sub structure -->
+    <div class="table-card">
+      <div class="section-title" style="padding:18px 18px 0;">
+        <h3>採購單清單（Parent PO / Sub-PO）</h3>
+        <span>Sub-PO 縮排顯示</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>PO 號</th>
+            <th>關聯訂單</th>
+            <th>廠商</th>
+            <th>採購內容</th>
+            <th>數量</th>
+            <th>金額</th>
+            <th>預計到貨</th>
+            <th>交期風險</th>
+            <th>PO 狀態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Parent PO 1 -->
+          <tr class="po-group" style="background:#f0f4ff;">
+            <td><strong>PPO-20260421-001</strong></td>
+            <td>SO-20260421-003｜台積電</td>
+            <td colspan="2"><strong>台積電員工禮包組合採購（Parent）</strong></td>
+            <td>1,200 set</td>
+            <td><strong>NT$ 660,000</strong></td>
+            <td>2026/05/08</td>
+            <td>—</td>
+            <td><span class="status processing">生產中</span></td>
+          </tr>
+          <tr class="sub-po">
+            <td>&nbsp;&nbsp;└ PO-20260421-001A</td>
+            <td>↳ PPO-20260421-001</td>
+            <td>台灣禮品工坊</td>
+            <td>304 不鏽鋼保溫杯白胚</td>
+            <td>1,260 pcs</td>
+            <td>NT$ 352,800</td>
+            <td>2026/04/30</td>
+            <td><span class="risk-low">低</span></td>
+            <td><span class="status processing">生產中</span></td>
+          </tr>
+          <tr class="sub-po">
+            <td>&nbsp;&nbsp;└ PO-20260421-001B</td>
+            <td>↳ PPO-20260421-001</td>
+            <td>富丸製袋廠</td>
+            <td>帆布環保袋（滿版絹印）</td>
+            <td>1,260 pcs</td>
+            <td>NT$ 119,700</td>
+            <td>2026/05/02</td>
+            <td><span class="risk-low">低</span></td>
+            <td><span class="status processing">生產中</span></td>
+          </tr>
+          <tr class="sub-po">
+            <td>&nbsp;&nbsp;└ PO-20260421-001C</td>
+            <td>↳ PPO-20260421-001</td>
+            <td>文揚印刷</td>
+            <td>精裝筆記本 A5（燙金書脊）</td>
+            <td>1,260 pcs</td>
+            <td>NT$ 187,500</td>
+            <td>2026/04/28</td>
+            <td><span class="risk-low">低</span></td>
+            <td><span class="status done">已到貨待 QC</span></td>
+          </tr>
+
+          <!-- Parent PO 2 -->
+          <tr class="po-group" style="background:#f0f4ff;">
+            <td><strong>PPO-20260423-002</strong></td>
+            <td>SO-20260423-014｜國泰人壽</td>
+            <td colspan="2"><strong>保溫杯客製採購（Parent）</strong></td>
+            <td>525 pcs</td>
+            <td><strong>NT$ 187,500</strong></td>
+            <td>2026/05/05</td>
+            <td><span class="risk-mid">中</span></td>
+            <td><span class="status pending">待核准</span> <span class="delta-badge">△Flow</span></td>
+          </tr>
+          <tr class="sub-po">
+            <td>&nbsp;&nbsp;└ PO-20260423-018</td>
+            <td>↳ PPO-20260423-002</td>
+            <td>台灣禮品工坊</td>
+            <td>保溫杯白胚 + 雷射雕刻加工</td>
+            <td>525 pcs</td>
+            <td>NT$ 187,500</td>
+            <td>2026/05/05</td>
+            <td><span class="risk-mid">中</span></td>
+            <td><span class="status pending">待主管核准</span></td>
+          </tr>
+
+          <!-- Parent PO 3 — 有風險 -->
+          <tr class="po-group" style="background:#fff8f0;">
+            <td><strong>PPO-20260419-003</strong></td>
+            <td>SO-20260419-007｜遠傳電信</td>
+            <td colspan="2"><strong>帆布環保袋大量採購（Parent）</strong></td>
+            <td>2,100 pcs</td>
+            <td><strong>NT$ 200,550</strong></td>
+            <td>2026/05/15</td>
+            <td><span class="risk-high">高</span></td>
+            <td><span class="status alert">交期風險</span></td>
+          </tr>
+          <tr class="sub-po" style="background:#fff8f0;">
+            <td>&nbsp;&nbsp;└ PO-20260419-009</td>
+            <td>↳ PPO-20260419-003</td>
+            <td>富丸製袋廠</td>
+            <td>帆布袋布料（滿版印刷用胚布）</td>
+            <td>2,100 pcs</td>
+            <td>NT$ 200,550</td>
+            <td>2026/05/15</td>
+            <td><span class="risk-high">高</span></td>
+            <td><span class="status alert">備料不足</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer-note">示意用途：Supply Core OS — 採購管理 Mockup ｜ Parent PO / Sub-PO 拆單模型，核准流程由 Delta Flow 管理</div>
+  </main>
+</div>
+</body>
+</html>

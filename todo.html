@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>我的待辦 — Supply Core OS</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><h1>Supply Core OS</h1><p>核心業務系統示意畫面</p></div>
+    <div class="nav-group">
+      <div class="nav-title">總覽</div>
+      <a class="nav-item" href="index.html">Dashboard</a>
+      <a class="nav-item active" href="todo.html">我的待辦</a>
+      <a class="nav-item" href="exceptions.html">異常中心</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">主資料</div>
+      <a class="nav-item" href="products.html">商品資料</a>
+      <a class="nav-item" href="suppliers.html">供應商資料</a>
+      <a class="nav-item" href="supplier-mapping.html">Supplier Mapping</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">交易作業</div>
+      <a class="nav-item" href="quotes.html">報價管理</a>
+      <a class="nav-item" href="orders.html">訂單管理</a>
+      <a class="nav-item" href="purchase.html">採購管理</a>
+      <a class="nav-item" href="receiving.html">收貨 / QC</a>
+      <a class="nav-item" href="logistics.html">物流交付</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">營運分析</div>
+      <a class="nav-item" href="supply-performance.html">供應績效</a>
+      <a class="nav-item" href="delivery-risk.html">交期風險</a>
+      <a class="nav-item" href="margin.html">毛利分析</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="search">🔎 搜尋待辦項目...</div>
+      <div class="top-actions">
+        <div class="icon-btn">🔔 8</div>
+        <div class="user-box">
+          <span class="avatar"></span>
+          <div><div style="font-weight:700;">王怡文</div><div style="font-size:12px;color:var(--subtext);">營運主管</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h2>我的待辦</h2>
+        <p>集中顯示所有需要您操作或確認的事項，依優先級與截止日期排序。</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn secondary">標記全部已讀</button>
+        <button class="btn primary">＋ 新增待辦</button>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <section class="kpi-grid">
+      <div class="card">
+        <div class="kpi-label">全部待辦</div>
+        <div class="kpi-value">8</div>
+        <div class="kpi-trend trend-info">本週新增 3 項</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">今日到期</div>
+        <div class="kpi-value">3</div>
+        <div class="kpi-trend trend-alert">需優先處理</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">高優先</div>
+        <div class="kpi-value">2</div>
+        <div class="kpi-trend trend-warn">逾期風險</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">本週已完成</div>
+        <div class="kpi-value">11</div>
+        <div class="kpi-trend trend-up">效率良好</div>
+      </div>
+    </section>
+
+    <!-- Filter -->
+    <div class="filter-bar">
+      <span class="filter-chip active">全部 (8)</span>
+      <span class="filter-chip">待簽核 (2)</span>
+      <span class="filter-chip">待判定 (2)</span>
+      <span class="filter-chip">文件待補 (2)</span>
+      <span class="filter-chip">待回覆 (1)</span>
+      <span class="filter-chip">逾期 (1)</span>
+    </div>
+
+    <!-- Task list -->
+    <div class="card" style="margin-bottom:20px;">
+      <div class="task-list">
+
+        <div class="task-item" style="border-left: 4px solid var(--red);">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <strong>⚠️ 審核 PO-20260423-018（已逾期）</strong>
+            <span style="font-size:12px;color:var(--red);">截止：2026/04/23 17:30</span>
+          </div>
+          <div class="meta">廠商：台灣禮品工坊｜金額：NT$ 187,500｜送審人：林業務｜品項：訂製保溫杯 500 pcs</div>
+          <div class="tag red">逾期未處理</div>
+        </div>
+
+        <div class="task-item" style="border-left: 4px solid var(--orange);">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <strong>確認 Logo 打樣結果（國泰人壽）</strong>
+            <span style="font-size:12px;color:var(--orange);">截止：今日 18:00</span>
+          </div>
+          <div class="meta">客戶：國泰人壽｜品項：帆布環保袋印刷打樣｜Pantone 2935C 待確認｜已寄回打樣樣品</div>
+          <div class="tag orange">待判定</div>
+        </div>
+
+        <div class="task-item" style="border-left: 4px solid var(--primary);">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <strong>審核報價單 QT-20260423-004</strong>
+            <span style="font-size:12px;color:var(--subtext);">截止：今日 17:00</span>
+          </div>
+          <div class="meta">客戶：富邦金控｜品項：客制商務行動電源 10,000mAh × 300 pcs｜報價：NT$ 264,000</div>
+          <div class="tag blue">待簽核</div>
+        </div>
+
+        <div class="task-item">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <strong>補齊物流文件 DO-240423-002</strong>
+            <span style="font-size:12px;color:var(--subtext);">截止：明日 09:00</span>
+          </div>
+          <div class="meta">出貨單：DO-240423-002｜客戶：台積電｜缺少：裝箱明細表、客戶收貨資訊確認函</div>
+          <div class="tag purple">文件待補</div>
+        </div>
+
+        <div class="task-item">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <strong>審核 PO-20260422-015 付款申請</strong>
+            <span style="font-size:12px;color:var(--subtext);">截止：2026/04/25</span>
+          </div>
+          <div class="meta">廠商：華盛電子禮品｜付款條件：Net 30｜金額：NT$ 138,000｜品項：客製無線充電滑鼠增 200 pcs</div>
+          <div class="tag blue">待簽核</div>
+        </div>
+
+        <div class="task-item">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <strong>確認交期延誤處置方案</strong>
+            <span style="font-size:12px;color:var(--subtext);">截止：2026/04/25</span>
+          </div>
+          <div class="meta">PO-20260421-009｜廠商：富丸制袋廠｜延遲原因：布料備料不足，富邦金控訂單預估延後 4 天</div>
+          <div class="tag orange">待判定</div>
+        </div>
+
+        <div class="task-item">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <strong>回覆客戶打樣樣品確認（中信銀行）</strong>
+            <span style="font-size:12px;color:var(--subtext);">截止：2026/04/26</span>
+          </div>
+          <div class="meta">客戶：中信銀行｜品項：皮革名片夾打樣 × 5 pcs｜待確認炼革顏色與 Logo 紋裟位置</div>
+          <div class="tag teal">待回覆</div>
+        </div>
+
+        <div class="task-item">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <strong>補齊 GRN-20260422-004 收貨文件</strong>
+            <span style="font-size:12px;color:var(--subtext);">截止：2026/04/26</span>
+          </div>
+          <div class="meta">廠商：富丸制袋廠｜缺少：整批品質報告、布料成分檢驗證明</div>
+          <div class="tag purple">文件待補</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="footer-note">示意用途：Supply Core OS — 我的待辦 Mockup</div>
+  </main>
+</div>
+</body>
+</html>

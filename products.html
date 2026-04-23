@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>商品資料 — Supply Core OS</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><h1>Supply Core OS</h1><p>核心業務系統示意畫面</p></div>
+    <div class="nav-group">
+      <div class="nav-title">總覽</div>
+      <a class="nav-item" href="index.html">Dashboard</a>
+      <a class="nav-item" href="todo.html">我的待辦</a>
+      <a class="nav-item" href="exceptions.html">異常中心</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">主資料</div>
+      <a class="nav-item active" href="products.html">商品資料</a>
+      <a class="nav-item" href="suppliers.html">供應商資料</a>
+      <a class="nav-item" href="supplier-mapping.html">Supplier Mapping</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">交易作業</div>
+      <a class="nav-item" href="quotes.html">報價管理</a>
+      <a class="nav-item" href="orders.html">訂單管理</a>
+      <a class="nav-item" href="purchase.html">採購管理</a>
+      <a class="nav-item" href="receiving.html">收貨 / QC</a>
+      <a class="nav-item" href="logistics.html">物流交付</a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">營運分析</div>
+      <a class="nav-item" href="supply-performance.html">供應績效</a>
+      <a class="nav-item" href="delivery-risk.html">交期風險</a>
+      <a class="nav-item" href="margin.html">毛利分析</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="search">🔎 搜尋 SKU、品名、類別、供應商...</div>
+      <div class="top-actions">
+        <div class="icon-btn">🔔 8</div>
+        <div class="user-box">
+          <span class="avatar"></span>
+          <div><div style="font-weight:700;">王怡文</div><div style="font-size:12px;color:var(--subtext);">營運主管</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h2>商品資料</h2>
+        <p>管理所有商品的基本資料、規格、定價與供應來源。</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn secondary">匯入 Excel</button>
+        <button class="btn secondary">匯出</button>
+        <button class="btn primary">＋ 新增商品</button>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <section class="kpi-grid">
+      <div class="card">
+        <div class="kpi-label">商品總數</div>
+        <div class="kpi-value">312</div>
+        <div class="kpi-trend trend-info">本月新增 8 筆</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">啟用中</div>
+        <div class="kpi-value">284</div>
+        <div class="kpi-trend trend-up">91.0%</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">已停用</div>
+        <div class="kpi-value">28</div>
+        <div class="kpi-trend trend-warn">9.0%</div>
+      </div>
+      <div class="card">
+        <div class="kpi-label">無供應商對應</div>
+        <div class="kpi-value">14</div>
+        <div class="kpi-trend trend-alert">需補齊 Mapping</div>
+      </div>
+    </section>
+
+    <!-- Filter -->
+    <div class="filter-bar">
+      <span class="filter-chip active">全部</span>
+      <span class="filter-chip">機構件</span>
+      <span class="filter-chip">電子元件</span>
+      <span class="filter-chip">包材</span>
+      <span class="filter-chip">半成品</span>
+      <span class="filter-chip">成品</span>
+    </div>
+
+    <!-- Table -->
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>SKU</th>
+            <th>品名</th>
+            <th>類別</th>
+            <th>規格 / 材質</th>
+            <th>單位</th>
+            <th>主要供應商</th>
+            <th>採購單價</th>
+            <th>狀態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>SKU-A12</td>
+            <td>控制模組 A12</td>
+            <td>電子元件</td>
+            <td>PCB 4 層板，12V / 5A</td>
+            <td>pcs</td>
+            <td>宇翔電子</td>
+            <td>NT$ 820</td>
+            <td><span class="status done">啟用</span></td>
+          </tr>
+          <tr>
+            <td>SKU-B07</td>
+            <td>鋁件外殼 B07</td>
+            <td>機構件</td>
+            <td>A6061-T6，陽極處理</td>
+            <td>pcs</td>
+            <td>台灣精準工業</td>
+            <td>NT$ 340</td>
+            <td><span class="status done">啟用</span></td>
+          </tr>
+          <tr>
+            <td>SKU-C04</td>
+            <td>壓鑄件 C04</td>
+            <td>機構件</td>
+            <td>鋅合金壓鑄，噴砂</td>
+            <td>pcs</td>
+            <td>創誠五金</td>
+            <td>NT$ 175</td>
+            <td><span class="status done">啟用</span></td>
+          </tr>
+          <tr>
+            <td>SKU-P33</td>
+            <td>包材批次 P33</td>
+            <td>包材</td>
+            <td>瓦楞紙箱，單瓦 3 mm</td>
+            <td>個</td>
+            <td>鴻展材料</td>
+            <td>NT$ 28</td>
+            <td><span class="status done">啟用</span></td>
+          </tr>
+          <tr>
+            <td>SKU-A17</td>
+            <td>外殼組件 A17</td>
+            <td>機構件</td>
+            <td>PC+ABS 射出成型</td>
+            <td>pcs</td>
+            <td>全盛塑料</td>
+            <td>NT$ 210</td>
+            <td><span class="status done">啟用</span></td>
+          </tr>
+          <tr>
+            <td>SKU-M88</td>
+            <td>成品批次 M88</td>
+            <td>成品</td>
+            <td>組裝完成品，附合格證</td>
+            <td>set</td>
+            <td>（自製）</td>
+            <td>—</td>
+            <td><span class="status done">啟用</span></td>
+          </tr>
+          <tr>
+            <td>SKU-D09</td>
+            <td>散熱片 D09</td>
+            <td>電子元件</td>
+            <td>鋁擠型，表面黑化處理</td>
+            <td>pcs</td>
+            <td>—</td>
+            <td>—</td>
+            <td><span class="status pending">無 Mapping</span></td>
+          </tr>
+          <tr>
+            <td>SKU-F02</td>
+            <td>防水膠條 F02</td>
+            <td>機構件</td>
+            <td>矽膠，Shore A 50</td>
+            <td>m</td>
+            <td>台灣精準工業</td>
+            <td>NT$ 45</td>
+            <td><span class="status draft">停用</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer-note">示意用途：Supply Core OS — 商品資料 Mockup</div>
+  </main>
+</div>
+</body>
+</html>
