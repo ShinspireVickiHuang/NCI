@@ -75,7 +75,7 @@
     </div>
 
     <!-- ── KPI Cards ── -->
-    <section style="display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:20px;">
+    <section style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;">
 
       <div class="db-kpi">
         <div class="db-kpi-icon">📦</div>
@@ -92,24 +92,6 @@
           <div class="db-kpi-label">進行中採購</div>
           <div class="db-kpi-value">27</div>
           <div class="db-kpi-badge neutral">正常推進中</div>
-        </div>
-      </div>
-
-      <div class="db-kpi" style="--accent:#ef4444;">
-        <div class="db-kpi-icon">⚠️</div>
-        <div class="db-kpi-body">
-          <div class="db-kpi-label">待處理異常</div>
-          <div class="db-kpi-value">9</div>
-          <div class="db-kpi-badge alert">2 件逾 SLA</div>
-        </div>
-      </div>
-
-      <div class="db-kpi is-alert">
-        <div class="db-kpi-icon">🖼️</div>
-        <div class="db-kpi-body">
-          <div class="db-kpi-label">待確認 Logo 稿</div>
-          <div class="db-kpi-value">5</div>
-          <div class="db-kpi-badge warn">含 2 筆逾期</div>
         </div>
       </div>
 
@@ -230,7 +212,7 @@
     </section>
 
     <!-- ── Bottom Row ── -->
-    <section style="display:grid;grid-template-columns:1fr 1fr 360px;gap:16px;margin-bottom:20px;">
+    <section style="display:grid;grid-template-columns:1fr 360px;gap:16px;margin-bottom:20px;">
 
       <!-- Recent transactions -->
       <div class="table-card" style="margin-bottom:0;">
@@ -280,67 +262,6 @@
             </tr>
           </tbody>
         </table>
-      </div>
-
-      <!-- My Tasks -->
-      <div class="card" style="padding:16px 18px;">
-        <div class="section-title" style="margin-bottom:12px;">
-          <h3>我的待辦</h3>
-          <span style="background:var(--line);color:var(--subtext);border-radius:10px;padding:1px 8px;font-size:12px;">8 項</span>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <div class="db-task urgent">
-            <div class="db-task-left">
-              <div class="db-task-dot" style="background:#ef4444;"></div>
-              <div>
-                <div style="font-size:13px;font-weight:600;">! 審核採購單 PO-018</div>
-                <div style="font-size:11px;color:var(--subtext);">台灣禮品工坊 · 保溫杯 500 pcs · NT$187,500</div>
-              </div>
-            </div>
-            <div class="tag red" style="font-size:11px;white-space:nowrap;">今日 17:30</div>
-          </div>
-          <div class="db-task">
-            <div class="db-task-left">
-              <div class="db-task-dot" style="background:#94a3b8;"></div>
-              <div>
-                <div style="font-size:13px;font-weight:600;">確認 Logo 打樣結果</div>
-                <div style="font-size:11px;color:var(--subtext);">國泰人壽 · 帆布環保袋 · Pantone 配色待確認</div>
-              </div>
-            </div>
-            <div class="tag orange" style="font-size:11px;white-space:nowrap;">待判定</div>
-          </div>
-          <div class="db-task">
-            <div class="db-task-left">
-              <div class="db-task-dot" style="background:#94a3b8;"></div>
-              <div>
-                <div style="font-size:13px;font-weight:600;">補齊出貨文件 DO-002</div>
-                <div style="font-size:11px;color:var(--subtext);">台積電 · 缺少裝箱明細表</div>
-              </div>
-            </div>
-            <div class="tag" style="font-size:11px;white-space:nowrap;background:#f1f5f9;color:#475569;">文件待補</div>
-          </div>
-          <div class="db-task">
-            <div class="db-task-left">
-              <div class="db-task-dot" style="background:#94a3b8;"></div>
-              <div>
-                <div style="font-size:13px;font-weight:600;">QC 重工確認 GRN-006</div>
-                <div style="font-size:11px;color:var(--subtext);">宏達印刷 · 環保袋印刷偏移 8mm · 300 pcs</div>
-              </div>
-            </div>
-            <div class="tag orange" style="font-size:11px;white-space:nowrap;">品質異常</div>
-          </div>
-          <div class="db-task">
-            <div class="db-task-left">
-              <div class="db-task-dot" style="background:#94a3b8;"></div>
-              <div>
-                <div style="font-size:13px;font-weight:600;">更新供應商評分 Q1</div>
-                <div style="font-size:11px;color:var(--subtext);">供應績效季評 · 截止 04/30</div>
-              </div>
-            </div>
-            <div class="tag" style="font-size:11px;white-space:nowrap;background:#f1f5f9;color:#475569;">本週</div>
-          </div>
-          <a href="todo.html" style="display:block;text-align:center;padding:8px;border:1.5px dashed var(--line);border-radius:10px;font-size:12px;color:var(--subtext);text-decoration:none;margin-top:4px;">查看全部 8 項待辦 →</a>
-        </div>
       </div>
 
       <!-- Exceptions Feed -->
