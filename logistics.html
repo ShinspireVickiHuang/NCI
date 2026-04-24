@@ -24,7 +24,7 @@
 </head>
 <body>
 <div class="app">
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <div class="brand"><h1>Supply Core OS</h1><p>核心業務系統示意畫面</p></div>
     <div class="nav-group">
       <div class="nav-title">總覽</div>
@@ -56,6 +56,7 @@
 
   <main class="main">
     <div class="topbar">
+      <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()" aria-label="開啟選單">☰</button>
       <div class="search">🔎 搜尋出貨單號、客戶、訂單號、物流商...</div>
       <div class="top-actions">
         <div class="icon-btn">🔔 8</div>
@@ -243,5 +244,7 @@
     <div class="footer-note">示意用途：Supply Core OS — 物流交付 Mockup ｜ 出貨放行條件由 Delta Flow 控管，n8n 負責物流狀態追蹤推播</div>
   </main>
 </div>
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+  <script src="assets/nav.js"></script>
 </body>
 </html>

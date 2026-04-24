@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh-Hant"> 
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" /> 
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard — Supply Core OS</title>
-  <link rel="stylesheet" href="assets/style.css" />  
+  <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
-<div class="app">       
+<div class="app">
 
-  <!-- ── Sidebar ── --> 
-  <aside class="sidebar"> 
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar" id="sidebar">
     <div class="brand">
       <h1>Supply Core OS</h1>
       <p>核心業務系統示意畫面</p>
@@ -46,9 +46,10 @@
   <!-- ── Main ── -->
   <main class="main">
     <div class="topbar">
+      <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()" aria-label="開啟選單">☰</button>
       <div class="search">🔎 搜尋訂單號、PO、Barcode、供應商、商品名稱...</div>
       <div class="top-actions">
-        <div class="icon-btn">🔔 8</div>
+        <div class="icon-btn">🔔 <span style="background:#ef4444;color:#fff;border-radius:9px;padding:1px 5px;font-size:11px;">8</span></div>
         <div class="icon-btn">📎 文件</div>
         <div class="user-box">
           <span class="avatar"></span>
@@ -60,10 +61,12 @@
       </div>
     </div>
 
-    <div class="page-header">
+    <!-- ── Page Header ── -->
+    <div class="page-header" style="align-items:flex-start;">
       <div>
-        <h2>營運總覽 Dashboard</h2>
-        <p>集中掌握禮贈品訂單、採購生產、收貨 QC、物流出貨與異常狀態，支援每日營運決策。</p>
+        <div style="font-size:12px;color:var(--subtext);margin-bottom:4px;">2026 年 4 月 24 日（四）— 第 17 週</div>
+        <h2 style="margin-bottom:4px;">早安，王怡文 👋</h2>
+        <p>今日有 <strong style="color:#ef4444;">3 件異常待處理</strong>，2 筆 Logo 打樣待確認，1 筆採購單待簽核。</p>
       </div>
       <div class="header-actions">
         <button class="btn secondary">匯出週報</button>
@@ -71,168 +74,486 @@
       </div>
     </div>
 
-    <!-- KPI -->
-    <section class="kpi-grid">
-      <div class="card">
-        <div class="kpi-label">本週新增訂單</div>
-        <div class="kpi-value">43</div>
-        <div class="kpi-trend trend-up">較上週 +18%</div>
+    <!-- ── KPI Cards ── -->
+    <section style="display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:20px;">
+
+      <div class="db-kpi">
+        <div class="db-kpi-icon">📦</div>
+        <div class="db-kpi-body">
+          <div class="db-kpi-label">本週新增訂單</div>
+          <div class="db-kpi-value">43</div>
+          <div class="db-kpi-badge up">↑ 較上週 +18%</div>
+        </div>
       </div>
-      <div class="card">
-        <div class="kpi-label">進行中生產採購</div>
-        <div class="kpi-value">27</div>
-        <div class="kpi-trend trend-up">正常推進中</div>
+
+      <div class="db-kpi">
+        <div class="db-kpi-icon">🏭</div>
+        <div class="db-kpi-body">
+          <div class="db-kpi-label">進行中採購</div>
+          <div class="db-kpi-value">27</div>
+          <div class="db-kpi-badge neutral">正常推進中</div>
+        </div>
       </div>
-      <div class="card">
-        <div class="kpi-label">待處理異常案件</div>
-        <div class="kpi-value">9</div>
-        <div class="kpi-trend trend-alert">2 件已逾 SLA</div>
+
+      <div class="db-kpi" style="--accent:#ef4444;">
+        <div class="db-kpi-icon">⚠️</div>
+        <div class="db-kpi-body">
+          <div class="db-kpi-label">待處理異常</div>
+          <div class="db-kpi-value">9</div>
+          <div class="db-kpi-badge alert">2 件逾 SLA</div>
+        </div>
       </div>
-      <div class="card">
-        <div class="kpi-label">本月準時交付率</div>
-        <div class="kpi-value">91.4%</div>
-        <div class="kpi-trend trend-warn">目標 95%</div>
+
+      <div class="db-kpi is-alert">
+        <div class="db-kpi-icon">🖼️</div>
+        <div class="db-kpi-body">
+          <div class="db-kpi-label">待確認 Logo 稿</div>
+          <div class="db-kpi-value">5</div>
+          <div class="db-kpi-badge warn">含 2 筆逾期</div>
+        </div>
+      </div>
+
+      <div class="db-kpi">
+        <div class="db-kpi-icon">🚚</div>
+        <div class="db-kpi-body">
+          <div class="db-kpi-label">本月準時交付率</div>
+          <div class="db-kpi-value">91.4%</div>
+          <div style="margin-top:6px;">
+            <div style="background:#e5e7eb;border-radius:4px;height:5px;overflow:hidden;">
+              <div style="width:91.4%;height:100%;background:#6366f1;border-radius:4px;"></div>
+            </div>
+            <div style="font-size:10px;color:var(--subtext);margin-top:2px;">目標 95%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="db-kpi">
+        <div class="db-kpi-icon">💰</div>
+        <div class="db-kpi-body">
+          <div class="db-kpi-label">本月毛利預估</div>
+          <div class="db-kpi-value">23.7%</div>
+          <div style="margin-top:6px;">
+            <div style="background:#e5e7eb;border-radius:4px;height:5px;overflow:hidden;">
+              <div style="width:23.7%;height:100%;background:#6366f1;border-radius:4px;"></div>
+            </div>
+            <div style="font-size:10px;color:var(--subtext);margin-top:2px;">預警值 18%</div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ── Pipeline ── -->
+    <section style="margin-bottom:20px;">
+      <div class="card" style="padding:20px 24px;">
+        <div class="section-title" style="margin-bottom:18px;">
+          <h3>供應執行管道 Order Pipeline</h3>
+          <a href="orders.html" style="color:var(--accent);font-size:13px;text-decoration:none;">查看全部訂單 →</a>
+        </div>
+        <div class="db-pipeline">
+
+          <div class="db-pipe-stage">
+            <div class="db-pipe-header">
+              <span class="db-pipe-icon">📋</span>
+              <span class="db-pipe-label">待確認</span>
+            </div>
+            <div class="db-pipe-num">6</div>
+            <div class="db-pipe-sub">含 2 筆需確認 Logo 稿</div>
+            <div class="db-pipe-items">
+              <div class="db-pipe-item"><span class="status pending" style="font-size:11px;">待確認</span> SO-014 國泰人壽</div>
+              <div class="db-pipe-item"><span class="status pending" style="font-size:11px;">待確認</span> SO-017 富邦人壽</div>
+            </div>
+          </div>
+
+          <div class="db-pipe-arrow">→</div>
+
+          <div class="db-pipe-stage">
+            <div class="db-pipe-header">
+              <span class="db-pipe-icon">🖨️</span>
+              <span class="db-pipe-label">打樣 / 生產</span>
+            </div>
+            <div class="db-pipe-num">14</div>
+            <div class="db-pipe-sub">其中 3 筆交期風險</div>
+            <div class="db-pipe-items">
+              <div class="db-pipe-item"><span class="status alert" style="font-size:11px;">⚠ 風險</span> PO-009 富邦金控</div>
+              <div class="db-pipe-item"><span class="status processing" style="font-size:11px;">生產中</span> PO-018 國泰人壽</div>
+            </div>
+          </div>
+
+          <div class="db-pipe-arrow">→</div>
+
+          <div class="db-pipe-stage">
+            <div class="db-pipe-header">
+              <span class="db-pipe-icon">🔍</span>
+              <span class="db-pipe-label">收貨 / QC</span>
+            </div>
+            <div class="db-pipe-num">8</div>
+            <div class="db-pipe-sub">今日預計到貨 3 筆</div>
+            <div class="db-pipe-items">
+              <div class="db-pipe-item"><span class="status alert" style="font-size:11px;">QC 異常</span> GRN-006 宏達印刷</div>
+              <div class="db-pipe-item"><span class="status processing" style="font-size:11px;">進行中</span> GRN-007 富丸製袋廠</div>
+            </div>
+          </div>
+
+          <div class="db-pipe-arrow">→</div>
+
+          <div class="db-pipe-stage">
+            <div class="db-pipe-header">
+              <span class="db-pipe-icon">🚚</span>
+              <span class="db-pipe-label">待出貨</span>
+            </div>
+            <div class="db-pipe-num">5</div>
+            <div class="db-pipe-sub">1 筆待包裝確認</div>
+            <div class="db-pipe-items">
+              <div class="db-pipe-item"><span class="status pending" style="font-size:11px;">待確認</span> DO-011 台積電</div>
+              <div class="db-pipe-item"><span class="status done" style="font-size:11px;">放行</span> DO-012 中信銀行</div>
+            </div>
+          </div>
+
+          <div class="db-pipe-arrow">→</div>
+
+          <div class="db-pipe-stage db-pipe-done">
+            <div class="db-pipe-header">
+              <span class="db-pipe-icon">✅</span>
+              <span class="db-pipe-label">已完成</span>
+            </div>
+            <div class="db-pipe-num">103</div>
+            <div class="db-pipe-sub">本月累計</div>
+            <div class="db-pipe-items">
+              <div class="db-pipe-item" style="color:var(--subtext);font-size:12px;">本月目標：120 件</div>
+              <div style="background:#e5e7eb;border-radius:4px;height:5px;margin-top:6px;overflow:hidden;"><div style="width:85.8%;height:100%;background:#64748b;border-radius:4px;"></div></div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
 
-    <!-- Pipeline + My Tasks -->
-    <section class="content-grid">
-      <div class="card">
-        <div class="section-title">
-          <h3>訂單與供應執行狀態</h3>
-          <span>查看完整流程</span>
-        </div>
-        <div class="stage-list">
-          <div class="stage-box">
-            <h4>待確認訂單</h4>
-            <div class="num">6</div>
-            <div class="sub">含 2 筆需確認 Logo 稿</div>
-          </div>
-          <div class="stage-box">
-            <h4>打樣 / 生產中</h4>
-            <div class="num">14</div>
-            <div class="sub">其中 3 筆交期風險</div>
-          </div>
-          <div class="stage-box">
-            <h4>待收貨 / QC</h4>
-            <div class="num">8</div>
-            <div class="sub">今日預計到貨 3 筆</div>
-          </div>
-          <div class="stage-box">
-            <h4>待出貨交付</h4>
-            <div class="num">5</div>
-            <div class="sub">1 筆待包裝確認</div>
-          </div>
-        </div>
-      </div>
+    <!-- ── Bottom Row ── -->
+    <section style="display:grid;grid-template-columns:1fr 1fr 360px;gap:16px;margin-bottom:20px;">
 
-      <div class="card">
-        <div class="section-title">
-          <h3>我的待辦</h3>
-          <span>共 8 項</span>
-        </div>
-        <div class="task-list">
-          <div class="task-item">
-            <strong>審核採購單 PO-20260423-018</strong>
-            <div class="meta">廠商：台灣禮品工坊｜品項：訂製保溫杯 500 pcs｜金額：NT$ 187,500｜截止：今日 17:30</div>
-            <div class="tag blue">待簽核</div>
-          </div>
-          <div class="task-item">
-            <strong>確認 Logo 打樣結果</strong>
-            <div class="meta">客戶：國泰人壽｜品項：帆布環保袋印刷打樣｜Pantone 顏色待確認</div>
-            <div class="tag orange">待判定</div>
-          </div>
-          <div class="task-item">
-            <strong>補齊出貨物流文件</strong>
-            <div class="meta">出貨單：DO-240423-002｜客戶：台積電｜缺少裝箱明細表</div>
-            <div class="tag purple">文件待補</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Recent Orders + Exceptions -->
-    <section class="content-grid">
+      <!-- Recent transactions -->
       <div class="table-card" style="margin-bottom:0;">
-        <div class="section-title" style="padding:18px 18px 0 18px;">
-          <h3>最近訂單 / 採購單狀態</h3>
-          <span>查看全部</span>
+        <div class="section-title" style="padding:16px 18px 0;">
+          <h3>最近動態</h3>
+          <a href="orders.html" style="color:var(--accent);font-size:13px;text-decoration:none;">查看全部</a>
         </div>
         <table>
           <thead>
-            <tr>
-              <th>單號</th>
-              <th>客戶 / 供應商</th>
-              <th>品項</th>
-              <th>目前狀態</th>
-              <th>預計日期</th>
-              <th>異常</th>
-            </tr>
+            <tr><th>單號</th><th>對象</th><th>品項</th><th>狀態</th><th>日期</th></tr>
           </thead>
           <tbody>
             <tr>
-              <td>SO-20260423-014</td>
+              <td><span style="font-family:monospace;font-size:12px;">SO-014</span></td>
               <td>國泰人壽</td>
-                <td>訂製保溫杯 500 pcs</td>
-                <td><span class="status processing">生產製作中</span></td>
-                <td>2026/05/02</td>
-              <td>—</td>
+              <td>保溫杯 500 pcs</td>
+              <td><span class="status processing">生產中</span></td>
+              <td style="color:var(--subtext);font-size:12px;">04/23</td>
             </tr>
             <tr>
-              <td>PO-20260423-018</td>
+              <td><span style="font-family:monospace;font-size:12px;">PO-018</span></td>
               <td>台灣禮品工坊</td>
-                <td>保溫杯 500 pcs 生產採購</td>
-                <td><span class="status pending">待主管簽核</span></td>
-                <td>2026/04/28</td>
-                <td>採購待核准</td>
+              <td>保溫杯採購</td>
+              <td><span class="status pending">待簽核</span></td>
+              <td style="color:var(--subtext);font-size:12px;">04/23</td>
             </tr>
             <tr>
-              <td>GRN-20260423-006</td>
+              <td><span style="font-family:monospace;font-size:12px;">GRN-006</span></td>
               <td>宏達印刷</td>
-                <td>帆布環保袋 300 pcs</td>
-                <td><span class="status alert">QC 不合格</span></td>
-                <td>2026/04/23</td>
-                <td>Logo 印刷偏移</td>
+              <td>環保袋 300 pcs</td>
+              <td><span class="status alert">QC 異常</span></td>
+              <td style="color:var(--subtext);font-size:12px;">04/23</td>
             </tr>
             <tr>
-              <td>DO-20260422-011</td>
+              <td><span style="font-family:monospace;font-size:12px;">DO-011</span></td>
               <td>快捷物流</td>
-                <td>台積電員工禮 1,200 set</td>
-              <td><span class="status done">已完成交付</span></td>
-              <td>2026/04/22</td>
-              <td>—</td>
+              <td>台積電員工禮</td>
+              <td><span class="status done">已交付</span></td>
+              <td style="color:var(--subtext);font-size:12px;">04/22</td>
+            </tr>
+            <tr>
+              <td><span style="font-family:monospace;font-size:12px;">SO-013</span></td>
+              <td>富邦人壽</td>
+              <td>皮革名片夾 200 pcs</td>
+              <td><span class="status processing">打樣確認</span></td>
+              <td style="color:var(--subtext);font-size:12px;">04/22</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <div class="card">
-        <div class="section-title">
-          <h3>異常事件快覽</h3>
-          <span>9 件進行中</span>
+      <!-- My Tasks -->
+      <div class="card" style="padding:16px 18px;">
+        <div class="section-title" style="margin-bottom:12px;">
+          <h3>我的待辦</h3>
+          <span style="background:var(--line);color:var(--subtext);border-radius:10px;padding:1px 8px;font-size:12px;">8 項</span>
         </div>
-        <div class="alert-list">
-          <div class="alert-item">
-            <strong>交期延誤風險</strong>
-            <div class="meta">PO-20260421-009｜廠商原料備料延遲，富邦金控禮品訂單預估延後 4 天出貨</div>
-            <div class="tag red">高優先級</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="db-task urgent">
+            <div class="db-task-left">
+              <div class="db-task-dot" style="background:#ef4444;"></div>
+              <div>
+                <div style="font-size:13px;font-weight:600;">! 審核採購單 PO-018</div>
+                <div style="font-size:11px;color:var(--subtext);">台灣禮品工坊 · 保溫杯 500 pcs · NT$187,500</div>
+              </div>
+            </div>
+            <div class="tag red" style="font-size:11px;white-space:nowrap;">今日 17:30</div>
           </div>
-          <div class="alert-item">
-            <strong>Logo 印刷品質異常</strong>
-            <div class="meta">GRN-20260423-006｜帆布環保袋印刷位置偏移 8mm，全批 300 pcs 待重工確認</div>
-            <div class="tag orange">品質異常</div>
+          <div class="db-task">
+            <div class="db-task-left">
+              <div class="db-task-dot" style="background:#94a3b8;"></div>
+              <div>
+                <div style="font-size:13px;font-weight:600;">確認 Logo 打樣結果</div>
+                <div style="font-size:11px;color:var(--subtext);">國泰人壽 · 帆布環保袋 · Pantone 配色待確認</div>
+              </div>
+            </div>
+            <div class="tag orange" style="font-size:11px;white-space:nowrap;">待判定</div>
           </div>
-          <div class="alert-item">
-            <strong>毛利異常提醒</strong>
-            <div class="meta">SO-20260420-031｜中信銀行訂單緊急加工費超支，毛利率低於 18% 預警值</div>
-            <div class="tag purple">經營預警</div>
+          <div class="db-task">
+            <div class="db-task-left">
+              <div class="db-task-dot" style="background:#94a3b8;"></div>
+              <div>
+                <div style="font-size:13px;font-weight:600;">補齊出貨文件 DO-002</div>
+                <div style="font-size:11px;color:var(--subtext);">台積電 · 缺少裝箱明細表</div>
+              </div>
+            </div>
+            <div class="tag" style="font-size:11px;white-space:nowrap;background:#f1f5f9;color:#475569;">文件待補</div>
           </div>
+          <div class="db-task">
+            <div class="db-task-left">
+              <div class="db-task-dot" style="background:#94a3b8;"></div>
+              <div>
+                <div style="font-size:13px;font-weight:600;">QC 重工確認 GRN-006</div>
+                <div style="font-size:11px;color:var(--subtext);">宏達印刷 · 環保袋印刷偏移 8mm · 300 pcs</div>
+              </div>
+            </div>
+            <div class="tag orange" style="font-size:11px;white-space:nowrap;">品質異常</div>
+          </div>
+          <div class="db-task">
+            <div class="db-task-left">
+              <div class="db-task-dot" style="background:#94a3b8;"></div>
+              <div>
+                <div style="font-size:13px;font-weight:600;">更新供應商評分 Q1</div>
+                <div style="font-size:11px;color:var(--subtext);">供應績效季評 · 截止 04/30</div>
+              </div>
+            </div>
+            <div class="tag" style="font-size:11px;white-space:nowrap;background:#f1f5f9;color:#475569;">本週</div>
+          </div>
+          <a href="todo.html" style="display:block;text-align:center;padding:8px;border:1.5px dashed var(--line);border-radius:10px;font-size:12px;color:var(--subtext);text-decoration:none;margin-top:4px;">查看全部 8 項待辦 →</a>
+        </div>
+      </div>
+
+      <!-- Exceptions Feed -->
+      <div class="card" style="padding:16px 18px;">
+        <div class="section-title" style="margin-bottom:12px;">
+          <h3>異常事件</h3>
+          <a href="exceptions.html" style="color:var(--subtext);font-size:13px;text-decoration:none;">9 件進行中 →</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0;">
+          <div class="db-feed-item">
+            <div class="db-feed-dot" style="background:#ef4444;"></div><!-- alert -->
+            <div class="db-feed-content">
+              <div style="font-size:12px;font-weight:600;">交期延誤風險 <span class="tag red" style="font-size:10px;padding:1px 5px;">高</span></div>
+              <div style="font-size:11px;color:var(--subtext);">PO-009 · 富邦金控禮品 · 備料延遲 4 天</div>
+              <div style="font-size:10px;color:#9ca3af;">30 分鐘前</div>
+            </div>
+          </div>
+          <div class="db-feed-item">
+            <div class="db-feed-dot" style="background:#94a3b8;"></div>
+            <div class="db-feed-content">
+              <div style="font-size:12px;font-weight:600;">Logo 印刷品質異常 <span class="tag orange" style="font-size:10px;padding:1px 5px;">中</span></div>
+              <div style="font-size:11px;color:var(--subtext);">GRN-006 · 環保袋印位偏移 8mm · 300 pcs</div>
+              <div style="font-size:10px;color:#9ca3af;">2 小時前</div>
+            </div>
+          </div>
+          <div class="db-feed-item">
+            <div class="db-feed-dot" style="background:#94a3b8;"></div>
+            <div class="db-feed-content">
+              <div style="font-size:12px;font-weight:600;">毛利預警 <span class="tag" style="background:#f1f5f9;color:#475569;font-size:10px;padding:1px 5px;">提醒</span></div>
+              <div style="font-size:11px;color:var(--subtext);">SO-031 · 中信銀行 · 緊急費超支毛利 &lt; 18%</div>
+              <div style="font-size:10px;color:#9ca3af;">昨天 16:42</div>
+            </div>
+          </div>
+          <div class="db-feed-item">
+            <div class="db-feed-dot" style="background:#94a3b8;"></div>
+            <div class="db-feed-content">
+              <div style="font-size:12px;font-weight:600;">採購單待核准</div>
+              <div style="font-size:11px;color:var(--subtext);">PO-018 · 台灣禮品工坊 · 等待 2 小時</div>
+              <div style="font-size:10px;color:#9ca3af;">昨天 15:10</div>
+            </div>
+          </div>
+          <div class="db-feed-item">
+            <div class="db-feed-dot" style="background:#94a3b8;"></div>
+            <div class="db-feed-content">
+              <div style="font-size:12px;font-weight:600;">DO-011 已完成交付 ✓</div>
+              <div style="font-size:11px;color:var(--subtext);">台積電員工禮 1,200 set · 快捷物流</div>
+              <div style="font-size:10px;color:#9ca3af;">昨天 11:30</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ── Supplier Performance Strip ── -->
+    <section style="margin-bottom:20px;">
+      <div class="card" style="padding:16px 24px;">
+        <div class="section-title" style="margin-bottom:14px;">
+          <h3>本月供應商表現快覽</h3>
+          <a href="supply-performance.html" style="color:var(--accent);font-size:13px;text-decoration:none;">完整績效報表 →</a>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;">
+
+          <div class="db-supplier-strip">
+            <div style="font-weight:700;font-size:13px;">台灣禮品工坊</div>
+            <div style="font-size:11px;color:var(--subtext);margin-bottom:8px;">成品製作 · 保溫杯</div>
+            <div class="db-strip-row"><span>準時交貨</span><span class="db-strip-good">96%</span></div>
+            <div class="db-strip-row"><span>QC 合格</span><span class="db-strip-good">98%</span></div>
+            <div class="db-strip-row"><span>Logo 精準度</span><span class="db-strip-warn">88%</span></div>
+          </div>
+
+          <div class="db-supplier-strip">
+            <div style="font-weight:700;font-size:13px;">宏達印刷</div>
+            <div style="font-size:11px;color:var(--subtext);margin-bottom:8px;">網版印刷 · 環保袋</div>
+            <div class="db-strip-row"><span>準時交貨</span><span class="db-strip-warn">82%</span></div>
+            <div class="db-strip-row"><span>QC 合格</span><span class="db-strip-bad">74%</span></div>
+            <div class="db-strip-row"><span>Logo 精準度</span><span class="db-strip-bad">71%</span></div>
+          </div>
+
+          <div class="db-supplier-strip">
+            <div style="font-weight:700;font-size:13px;">富丸製袋廠</div>
+            <div style="font-size:11px;color:var(--subtext);margin-bottom:8px;">環保袋 · 不織布袋</div>
+            <div class="db-strip-row"><span>準時交貨</span><span class="db-strip-good">94%</span></div>
+            <div class="db-strip-row"><span>QC 合格</span><span class="db-strip-good">97%</span></div>
+            <div class="db-strip-row"><span>Logo 精準度</span><span class="db-strip-good">93%</span></div>
+          </div>
+
+          <div class="db-supplier-strip">
+            <div style="font-weight:700;font-size:13px;">文揚印刷</div>
+            <div style="font-size:11px;color:var(--subtext);margin-bottom:8px;">移印 · 雷射雕刻</div>
+            <div class="db-strip-row"><span>準時交貨</span><span class="db-strip-good">91%</span></div>
+            <div class="db-strip-row"><span>QC 合格</span><span class="db-strip-good">95%</span></div>
+            <div class="db-strip-row"><span>Logo 精準度</span><span class="db-strip-good">96%</span></div>
+          </div>
+
+          <div class="db-supplier-strip">
+            <div style="font-weight:700;font-size:13px;">華盛電子禮品</div>
+            <div style="font-size:11px;color:var(--subtext);margin-bottom:8px;">行動電源 · 3C 禮品</div>
+            <div class="db-strip-row"><span>準時交貨</span><span class="db-strip-good">89%</span></div>
+            <div class="db-strip-row"><span>QC 合格</span><span class="db-strip-warn">86%</span></div>
+            <div class="db-strip-row"><span>Logo 精準度</span><span class="db-strip-good">92%</span></div>
+          </div>
+
         </div>
       </div>
     </section>
 
     <div class="footer-note">示意用途：Supply Core OS — Dashboard Mockup</div>
   </main>
+
+  <style>
+    /* ── Dashboard KPI Cards ── */
+    .db-kpi {
+      background: var(--panel);
+      border: 1.5px solid var(--line);
+      border-top: 3px solid #6366f1;
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      gap: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .db-kpi-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+    .db-kpi-label { font-size: 11px; color: var(--subtext); margin-bottom: 4px; font-weight: 500; text-transform: uppercase; letter-spacing: .3px; }
+    .db-kpi-value { font-size: 28px; font-weight: 800; color: var(--text); line-height: 1; margin-bottom: 6px; }
+    .db-kpi-badge { display: inline-block; font-size: 11px; border-radius: 6px; padding: 2px 7px; font-weight: 600; }
+    .db-kpi-badge.up     { background: #dcfce7; color: #166534; }
+    .db-kpi-badge.alert  { background: #fee2e2; color: #991b1b; }
+    .db-kpi-badge.warn   { background: #fef9c3; color: #854d0e; }
+    .db-kpi-badge.neutral{ background: #e0f2fe; color: #075985; }
+
+    /* ── Pipeline ── */
+    .db-pipeline {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+    }
+    .db-pipe-stage {
+      flex: 1;
+      background: var(--bg);
+      border: 1.5px solid var(--line);
+      border-top: 3px solid #6366f1;
+      border-radius: 10px;
+      padding: 14px 16px;
+      min-width: 0;
+    }
+    .db-pipe-done { border-top-color: #94a3b8; }
+    .db-pipe-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--subtext);
+      font-size: 18px;
+      padding: 0 6px;
+      flex-shrink: 0;
+    }
+    .db-pipe-header { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+    .db-pipe-icon { font-size: 16px; }
+    .db-pipe-label { font-size: 12px; font-weight: 700; color: var(--subtext); text-transform: uppercase; letter-spacing: .3px; }
+    .db-pipe-num { font-size: 32px; font-weight: 800; color: #6366f1; line-height: 1; margin-bottom: 2px; }
+    .db-pipe-done .db-pipe-num { color: #94a3b8; }
+    .db-pipe-sub { font-size: 11px; color: var(--subtext); margin-bottom: 10px; }
+    .db-pipe-items { display: flex; flex-direction: column; gap: 4px; border-top: 1px solid var(--line); padding-top: 8px; }
+    .db-pipe-item { font-size: 11px; color: var(--text); display: flex; align-items: center; gap: 5px; }
+
+    /* ── Tasks ── */
+    .db-task { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 10px; border-radius: 10px; background: var(--bg); }
+    .db-task.urgent { background: #fff1f1; }
+    .db-task-left { display: flex; align-items: flex-start; gap: 10px; }
+    .db-task-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+
+    /* ── Activity Feed ── */
+    .db-feed-item { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+    .db-feed-item:last-child { border-bottom: none; }
+    .db-feed-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+    .db-feed-content { flex: 1; min-width: 0; }
+
+    /* ── Supplier Strip ── */
+    .db-supplier-strip { background: var(--bg); border: 1.5px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+    .db-strip-row { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; border-bottom: 1px solid var(--line); }
+    .db-strip-row:last-child { border-bottom: none; }
+    .db-strip-row span:first-child { color: var(--subtext); }
+
+    /* ── Dashboard color override: 靛藍 + 紅 + 灰，取消其他裝飾色 ── */
+    /* Status badges → 灰底灰字，只有 alert 保留紅色 */
+    .main .status.processing { background: #f1f5f9; color: #475569; }
+    .main .status.pending    { background: #f1f5f9; color: #475569; }
+    .main .status.done       { background: #f1f5f9; color: #475569; }
+    .main .status.shipping   { background: #f1f5f9; color: #475569; }
+    /* Tags → 灰底，只有 red 保留紅色 */
+    .main .tag.blue   { background: #f1f5f9; color: #475569; }
+    .main .tag.orange { background: #f1f5f9; color: #475569; }
+    .main .tag.purple { background: #f1f5f9; color: #475569; }
+    .main .tag.green  { background: #f1f5f9; color: #475569; }
+    /* db-kpi alert border */
+    .main .db-kpi.is-alert { border-top-color: #ef4444; }
+    /* Supplier strip: ≥90% bold gray, 80-89% normal, <80% red */
+    .db-strip-good  { font-weight: 700; color: #374151; }
+    .db-strip-warn  { font-weight: 700; color: #f59e0b; }
+    .db-strip-bad   { font-weight: 700; color: #ef4444; }
+
+    /* ── Mobile responsiveness for new grid ── */
+    @media (max-width: 860px) {
+      section[style*="grid-template-columns:repeat(6"] { grid-template-columns: repeat(2, 1fr) !important; }
+      section[style*="grid-template-columns:1fr 1fr 360px"] { grid-template-columns: 1fr !important; }
+      section[style*="grid-template-columns:repeat(5"] { grid-template-columns: repeat(2, 1fr) !important; }
+      .db-pipeline { flex-direction: column; }
+      .db-pipe-arrow { transform: rotate(90deg); padding: 4px 0; }
+    }
+  </style>
 </div>
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+  <script src="assets/nav.js"></script>
 </body>
 </html>

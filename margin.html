@@ -28,7 +28,7 @@
 </head>
 <body>
 <div class="app">
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <div class="brand"><h1>Supply Core OS</h1><p>核心業務系統示意畫面</p></div>
     <div class="nav-group">
       <div class="nav-title">總覽</div>
@@ -60,6 +60,7 @@
 
   <main class="main">
     <div class="topbar">
+      <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()" aria-label="開啟選單">☰</button>
       <div class="search">🔎 搜尋訂單號、客戶、商品、月份...</div>
       <div class="top-actions">
         <div class="icon-btn">🔔 8</div>
@@ -265,5 +266,7 @@
     <div class="footer-note">示意用途：Supply Core OS — 毛利分析 Mockup ｜ 毛利異常（低於 18%）自動觸發 Delta Flow 審查流程</div>
   </main>
 </div>
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+  <script src="assets/nav.js"></script>
 </body>
 </html>
